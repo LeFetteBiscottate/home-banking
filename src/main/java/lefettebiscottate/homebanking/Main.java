@@ -1,4 +1,4 @@
-package sarjavand.homebanking;
+package lefettebiscottate.homebanking;
 
 public class Main {
 
