@@ -40,7 +40,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.example.Main</mainClass>
+							<mainClass>sarjavand.homebanking.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
