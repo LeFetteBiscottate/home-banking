@@ -13,4 +13,122 @@ public class TransactionEntity {
 	private Double importo;
 	private TransactionType type;
 	
+	public TransactionEntity() {}
+	
+	public TransactionEntity(LocalDate transaction_date, String source, String destination,
+			String description, AccountEntity account, Double importo, TransactionType type) {
+		this.transaction_date = transaction_date;
+		this.source = source;
+		this.description = description;
+		this.destination = destination;
+		this.account = account;
+		this.importo = importo;
+		this.type = type;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Transazione: "+this.type+"\nImporto: "+this.importo+"\nDescrizione: "+
+				this.description+"\nDestinatario: "+this.destination;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == null)
+			return false;
+		if(this == o)
+			return true;
+		if(!(o instanceof TransactionEntity))
+			return false;
+		TransactionEntity t = (TransactionEntity) o;
+		return this.id == t.id;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 31*hash + id;
+		return hash;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	public LocalDate getTransaction_date() {
+		return transaction_date;
+	}
+	
+	
+	public void setTransaction_date(LocalDate transaction_date) {
+		this.transaction_date = transaction_date;
+	}
+	
+	
+	public String getSource() {
+		return source;
+	}
+	
+	
+	public void setSource(String source) {
+		this.source = source;
+	}
+	
+	
+	public String getDestination() {
+		return destination;
+	}
+	
+	
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
+	public AccountEntity getAccount() {
+		return account;
+	}
+	
+	
+	public void setAccount(AccountEntity account) {
+		this.account = account;
+	}
+	
+	
+	public Double getImporto() {
+		return importo;
+	}
+	
+	
+	public void setImporto(Double importo) {
+		this.importo = importo;
+	}
+	
+	
+	public TransactionType getType() {
+		return type;
+	}
+	
+	
+	public void setType(TransactionType type) {
+		this.type = type;
+	}
+	
 }

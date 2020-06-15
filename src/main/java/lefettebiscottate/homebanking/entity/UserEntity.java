@@ -6,6 +6,7 @@ import lefettebiscottate.homebanking.utils.Validation;
 
 public class UserEntity {
 
+	private int id;
 	private String name;
 	private String surname;
 	private String email;
@@ -199,6 +200,14 @@ public class UserEntity {
 		}
 
 		return true;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
