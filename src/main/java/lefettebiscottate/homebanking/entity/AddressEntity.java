@@ -9,20 +9,21 @@ public class AddressEntity {
 	private String provincia;
 	private String stato;
 	private int cap;
-
+	private UserEntity user;
 	
 	public AddressEntity() {
 		
 	}
 	
 	public AddressEntity(String via, String civico, String comune, String provincia,
-			String stato, int cap) {
+			String stato, int cap, UserEntity user) {
 		this.via = via;
 		this.civico = civico;
 		this.comune = comune;
 		this.provincia = provincia;
 		this.stato = stato;
 		this.cap = cap;
+		this.user = user;
 	}
 	
 	@Override
@@ -105,6 +106,14 @@ public class AddressEntity {
 	
 	public void setCap(int cap) {
 		this.cap = cap;
+	}
+	
+	public UserEntity getUser() {
+		return user;
+	}
+	
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 	
 }

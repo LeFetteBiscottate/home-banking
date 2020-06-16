@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import lefettebiscottate.homebanking.db.DatabaseCredentials;
 import lefettebiscottate.homebanking.db.UserDao;
 import lefettebiscottate.homebanking.entity.AccountType;
 import lefettebiscottate.homebanking.entity.AddressEntity;
@@ -37,8 +39,8 @@ class MainTest {
 		String stato = "Italia";
 		int cap = 00123;
 		
-		AddressEntity indirizzoDiJohn = new AddressEntity(via, civico, comune, provincia, stato, cap);
-		UserEntity johnDenver = new UserEntity(name, surname, email, birthdate, password, phonenumber, fiscal_code, gender, account_type, partita_IVA, isRegistrato, indirizzoDiJohn);
+		UserEntity johnDenver = new UserEntity(name, surname, email, birthdate, password, phonenumber, fiscal_code, gender, account_type, partita_IVA, isRegistrato);
+		AddressEntity indirizzoDiJohn = new AddressEntity(via, civico, comune, provincia, stato, cap, johnDenver);
 		
 		UserDao<UserEntity, Integer> ud = new UserDao<>();
 		
@@ -50,6 +52,7 @@ class MainTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 }

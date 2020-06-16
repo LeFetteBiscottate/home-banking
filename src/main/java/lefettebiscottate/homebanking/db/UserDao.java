@@ -61,6 +61,7 @@ public class UserDao<E, K> implements Dao<E, K> {
 
 				if (resp)
 					System.out.println("Insert OK");
+				else System.out.println("Errore nell'insert");
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
