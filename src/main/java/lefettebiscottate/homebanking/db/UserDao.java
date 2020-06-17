@@ -2,13 +2,16 @@ package lefettebiscottate.homebanking.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+=======
+import java.util.List;
+>>>>>>> cca97d0eea4231b2a5220ad28c347ddd91c43dd9
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -19,7 +22,10 @@ import lefettebiscottate.homebanking.entity.UserEntity;
 
 public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 
+
+
 	private ExecutorService executor = Executors.newSingleThreadExecutor();
+
 
 	private static Connection con = DBConnection.getConnection();
 	
@@ -108,6 +114,10 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 
 //	@Override
 	public Future<E> insert(E element) {
+		//CompletableFuture<E> future = (CompletableFuture<E>) CompletableFuture.supplyAsync(() -> "hello");
+		
+		return null;
+
 
 		return executor.submit(() -> {
 			
@@ -146,6 +156,7 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 			return null;
 			
 		});
+
 	}
 
 	//@Override
