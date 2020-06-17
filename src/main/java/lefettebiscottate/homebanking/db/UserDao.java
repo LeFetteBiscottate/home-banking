@@ -35,7 +35,7 @@ public class UserDao<E, K> implements Dao<E, K> {
 	public Future<E> insert(E element) {
 		//CompletableFuture<E> future = (CompletableFuture<E>) CompletableFuture.supplyAsync(() -> "hello");
 		
-		return null;
+		//return null;
 
 
 		return executor.submit(() -> {

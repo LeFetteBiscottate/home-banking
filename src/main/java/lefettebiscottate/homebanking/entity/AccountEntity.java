@@ -6,11 +6,12 @@ public class AccountEntity {
 
 	private int id;
 	private LocalDate creation_date;
-	private UserEntity user;
+	private int userId;
 
 	public AccountEntity() {
 
 	}
+	
 
 	@Override
 	public boolean equals(Object o) {
@@ -33,7 +34,7 @@ public class AccountEntity {
 
 	@Override
 	public String toString() {
-		return "Account:\n" + this.user.toString() + "\nID: " + this.id + "\nCreation date: " + this.creation_date
+		return "Account:\n" + this.userId + "\nID: " + this.id + "\nCreation date: " + this.creation_date
 				+ "\n";
 	}
 
@@ -53,12 +54,12 @@ public class AccountEntity {
 		this.creation_date = creation_date;
 	}
 
-	public UserEntity getUser() {
-		return user;
+	public int getUser() {
+		return userId;
 	}
 
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setUser(int userId) {
+		this.userId = userId;
 	}
 
 }
