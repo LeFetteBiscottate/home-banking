@@ -1,5 +1,6 @@
 package lefettebiscottate.homebanking.db;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,5 +103,8 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+=======
+public class AccountDao {
+>>>>>>> c5c0616964400ded97c461b52bb80df23a30b868
 
 }
