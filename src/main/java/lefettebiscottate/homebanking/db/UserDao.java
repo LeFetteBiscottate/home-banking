@@ -11,18 +11,54 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import lefettebiscottate.homebanking.entity.AccountType;
+import lefettebiscottate.homebanking.entity.Gender;
 import lefettebiscottate.homebanking.entity.UserEntity;
 
-public class UserDao<E, K> implements Dao<E, K> {
+public class UserDao<E, K> implements Dao<E,K> {
 
 	private ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	private static Connection con = DBConnection.getConnection();
-
-	@Override
+	
+	@Override 
 	public Future<E> getOne(K primaryKey) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		UserEntity ue = null;
+		
+		return  executor.submit(() -> {
+			try {
+				String query ="Select * from user where id = "+primaryKey;
+				
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(query);
+				
+				while(rs.next()) {
+//					ue = new UserEntity();
+					
+					ue.setId(rs.getInt("id"));
+					ue.setName(rs.getString("name"));
+					ue.setSurname(rs.getString("surname"));
+					ue.setBirthdate(rs.getDate("birthdate").toLocalDate());
+					ue.setEmail(rs.getString("email"));
+					ue.setPassword(rs.getString("password"));
+					ue.setPhonenumber(rs.getString("phone"));
+					ue.setFiscal_code(rs.getString("codicefiscale"));
+					ue.setGender(Gender.valueOf(rs.getString("gender")));
+					ue.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
+					ue.setRegistrato(rs.getBoolean("registrato"));
+					ue.setPartita_IVA(rs.getString("partitaIVA"));
+				}
+				
+				rs.close();
+				stmt.close();
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@Override
@@ -64,7 +100,7 @@ public class UserDao<E, K> implements Dao<E, K> {
 				else System.out.println("Errore nell'insert");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
