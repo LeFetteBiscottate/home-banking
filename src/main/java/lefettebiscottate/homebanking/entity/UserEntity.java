@@ -18,7 +18,6 @@ public class UserEntity {
 	private AccountType account_type;
 	private String partita_IVA;
 	private boolean isRegistrato;
-	private AddressEntity address;
 
 	// Costruttori
 	public UserEntity() {
@@ -41,8 +40,8 @@ public class UserEntity {
 	 */
 	public UserEntity(String name, String surname, String email, LocalDate birthdate, String password,
 			String phonenumber, String fiscal_code, Gender gender, AccountType account_type, String partita_IVA,
-			boolean isRegistrato, AddressEntity address) {
-		this.name = name;		
+			boolean isRegistrato) {
+		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.birthdate = birthdate;
@@ -53,7 +52,6 @@ public class UserEntity {
 		this.account_type = account_type;
 		this.partita_IVA = partita_IVA;
 		this.isRegistrato = isRegistrato;
-		this.address = address;
 	}
 
 	// Getter
@@ -101,10 +99,6 @@ public class UserEntity {
 		return isRegistrato;
 	}
 
-	public AddressEntity getAddress() {
-		return address;
-	}
-
 	// Setter
 	public void setName(String name) {
 		this.name = name;
@@ -150,16 +144,11 @@ public class UserEntity {
 		this.isRegistrato = isRegistrato;
 	}
 
-	public void setAddress(AddressEntity address) {
-		this.address = address;
-	}
-
 	@Override
 	public String toString() {
 		return "UserEntity [name=" + name + ", surname=" + surname + ", email=" + email + ", birthdate=" + birthdate
 				+ ", password=" + password + ", phonenumber=" + phonenumber + ", fiscal_code=" + fiscal_code
-				+ ", gender=" + gender + ", account_type=" + account_type + ", partita_IVA=" + partita_IVA
-				+ ", address=" + address + "]";
+				+ ", gender=" + gender + ", account_type=" + account_type + ", partita_IVA=" + partita_IVA + "]";
 	}
 
 	@Override
