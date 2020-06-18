@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import lefettebiscottate.homebanking.entity.PrestitoEntity;
+import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.TransactionEntity;
 
 public class TransactionDao {
@@ -30,7 +30,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount(account);
+				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 			}
 			
@@ -60,7 +60,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount(account);
+				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);
@@ -90,7 +90,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount(account);
+				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);
@@ -119,7 +119,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount(account);
+				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);
@@ -148,7 +148,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount(account);
+				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);

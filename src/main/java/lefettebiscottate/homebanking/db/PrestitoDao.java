@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
 import lefettebiscottate.homebanking.entity.TipoPrestito;
@@ -28,7 +29,7 @@ public class PrestitoDao {
 				p.setId(rs.getInt(1));
 				p.setImporto(rs.getDouble(2));
 				p.setInterest(rs.getDouble(3));
-				p.setAccount(account);
+				p.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
 				p.setN_rata(rs.getInt(5));
 				p.setI_rata(rs.getDouble(6));
 				p.setDurata(rs.getString(7));
@@ -60,7 +61,7 @@ public class PrestitoDao {
 				 p.setId(rs.getInt(1));
 				 p.setImporto(rs.getDouble(2));
 				 p.setInterest(rs.getDouble(3));
-			     p.setAccount(account);
+			     p.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
 				 p.setN_rata(rs.getInt(5));
 				 p.setI_rata(rs.getDouble(6));
 				 p.setDurata(rs.getString(7));

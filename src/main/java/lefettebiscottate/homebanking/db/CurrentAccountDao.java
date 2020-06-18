@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 
 public class CurrentAccountDao {
@@ -27,7 +28,7 @@ public class CurrentAccountDao {
 				c.setId(rs.getInt(1));
 				c.setIban(rs.getString(2));
 				c.setBalance(rs.getDouble(3));
-				c.setAccount(); // bisogna richiamare il metodo di AccountDao "getbyid"
+				c.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
 			}
 			
 			rs.close();
@@ -55,7 +56,7 @@ public class CurrentAccountDao {
 				c.setId(rs.getInt(1));
 				c.setIban(rs.getString(2));
 				c.setBalance(rs.getDouble(3));
-				c.setAccount(); // bisogna richiamare il metodo di AccountDao "getbyid"
+				c.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
 			}
 			
 			rs.close();
@@ -83,7 +84,7 @@ public class CurrentAccountDao {
 				c.setId(rs.getInt(1));
 				c.setIban(rs.getString(2));
 				c.setBalance(rs.getDouble(3));
-				c.setAccount(account);
+				c.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
 				
 				conti.add(c);
 			}
@@ -95,6 +96,30 @@ public class CurrentAccountDao {
 		}
 		
 		return conti;
+	}
+	
+	public List<AccountEntity> getAllAccount(){
+		List<AccountEntity> accounts = new ArrayList<AccountEntity>();
+		String query = "SELECT c.account_id FROM currentaccount AS c";
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while(rs.next()) {
+				AccountEntity a;
+				a = (AccountEntity) new AccountDao().getOne(rs.getInt(4));
+				
+				accounts.add(a);
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return accounts;
 	}
 	
 	
