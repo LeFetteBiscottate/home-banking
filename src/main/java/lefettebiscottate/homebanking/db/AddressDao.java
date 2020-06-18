@@ -1,20 +1,21 @@
 package lefettebiscottate.homebanking.db;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AddressEntity;
-import lefettebiscottate.homebanking.entity.BankEntity;
+//import lefettebiscottate.homebanking.entity.BankEntity;
 
 public class AddressDao<E, K> {// implements Dao<E,K> {
 	private static Connection con = DBConnection.getConnection();
 
 	// @Override
-	public E getOne(K primaryKey) {
+	public E getOne(K primaryKey) throws SQLException {
 		Statement stmt = null;
 		ResultSet rs = null;
 		E address = null;
@@ -34,12 +35,20 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 				int userId = rs.getInt("usr_id");
 				address = (E) new AddressEntity(via, civico, comune, provincia, regione, stato, cap, userId);
 			}
-			return address;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
 		}
-
-		return null;
+		return address;
 	}
 
 	// @Override
@@ -62,11 +71,33 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 				int userId = rs.getInt("usr_id");
 				addresses.add((E) new AddressEntity(via, civico, comune, provincia, regione, stato, cap, userId));
 			}
-			return addresses;
+
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return null;
+		return addresses;
 	}
 
 	// @Override
@@ -96,6 +127,21 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return null;
 	}
@@ -108,19 +154,63 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 			stmt = con.createStatement();
 			int deleted = stmt.executeUpdate(query);
 			return deleted;
+
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return 0;
 	}
 
 	// @Override
 	public E update(E element) {
-		// TODO Auto-generated method stub
+		AddressEntity address = (AddressEntity) element;
+		Statement stmt = null;
+		try {
+			String query = "UPDATE address SET via = " + address.getVia() + " civico =" + address.getCivico()
+					+ " comune =" + address.getComune() + " provincia =" + address.getProvincia() + " regione ="
+					+ address.getRegione() + " stato =" + address.getStato() + " cap=" + address.getCap()
+					+ " WHERE id =" + address.getId() + " AND userId=" + address.getUser();
+			stmt = con.createStatement();
+			int updated = stmt.executeUpdate(query);
+			if (updated == 1) {
+				System.out.println("Address successfully updated.");
+				return (E) address;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return null;
 	}
-=======
-public class AddressDao {
->>>>>>> c5c0616964400ded97c461b52bb80df23a30b868
 
 }

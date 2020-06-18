@@ -1,11 +1,12 @@
 package lefettebiscottate.homebanking.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AccountEntity {
 
 	private int id;
-	private LocalDate creation_date;
+	private String creation_date;
 	private int userId;
 
 	public AccountEntity() {
@@ -46,11 +47,11 @@ public class AccountEntity {
 		this.id = id;
 	}
 
-	public LocalDate getCreation_date() {
+	public String getCreation_date() {
 		return creation_date;
 	}
 
-	public void setCreation_date(LocalDate creation_date) {
+	public void setCreation_date(String creation_date) {
 		this.creation_date = creation_date;
 	}
 

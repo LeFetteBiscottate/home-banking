@@ -2,16 +2,17 @@ package lefettebiscottate.homebanking.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
-=======
+//=======
 import java.util.List;
->>>>>>> cca97d0eea4231b2a5220ad28c347ddd91c43dd9
+//>>>>>>> cca97d0eea4231b2a5220ad28c347ddd91c43dd9
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;

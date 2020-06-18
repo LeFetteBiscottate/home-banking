@@ -3,6 +3,7 @@ package lefettebiscottate.homebanking.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,20 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 				String name = rs.getString("name");
 				String filiale = rs.getString("filiale");
 				int userId = rs.getInt("user_id");
-				bank = new BankEntity(id, name, filiale, userId);
+				bank = new BankEntity(name, filiale, userId);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				rs.close();
+			}
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(con != null) {
+				con.close();
+			}
 		}
 		return bank;
 	}
@@ -57,6 +68,16 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				rs.close();
+			}
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(con != null) {
+				con.close();
+			}
 		}
 		return banks;
 	}
@@ -85,6 +106,13 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(con != null) {
+				con.close();
+			}
 		}
 		return null;
 	}
@@ -99,14 +127,23 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			return deleted;
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return 0;
-	}
-
-	// @Override
-	public E update(E element) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

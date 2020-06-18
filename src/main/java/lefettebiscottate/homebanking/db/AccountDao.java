@@ -1,10 +1,13 @@
 package lefettebiscottate.homebanking.db;
 
-<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AccountEntity;
@@ -24,12 +27,34 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				account.setUser(rs.getInt("user_id"));
-				account.setCreation_date(rs.getDate("date_of_creation").toLocalDate());
+				account.setCreation_date(rs.getString("date_of_creation"));
 				account.setId(rs.getInt("id"));
 			}
 			return (E) account;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return null;
 	}
@@ -46,7 +71,7 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 			while (rs.next()) {
 				AccountEntity acc = new AccountEntity();
 				acc.setId(rs.getInt("id"));
-				acc.setCreation_date(rs.getDate("date_of_creation").toLocalDate());
+				acc.setCreation_date(rs.getString("date_of_creation"));
 				acc.setUser(rs.getInt("user_id"));
 				accounts.add((E) acc);
 			}
@@ -54,6 +79,28 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 			return accounts;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return null;
 	}
@@ -64,13 +111,12 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 		PreparedStatement stmt = null;
 		try {
 
-			String query = "INSERT * INTO account (date_of_creation , user_id)VALUES(?,?)"; // Will
-																																	// be
-																																	// modified
+			String query = "INSERT * INTO account (date_of_creation , user_id)VALUES(?,?)";// will be modified
 			stmt = con.prepareStatement(query);
-			stmt.setDate(1, acc.getCreation_date().toString());
+			stmt.setString(1, (acc.getCreation_date()));// (arg0, arg1, arg2);(1,(acc.getCreation_date()));//
+														// LocalDate() should be converted to Date()
 			stmt.setInt(2, acc.getUser());
-			
+
 			boolean added = stmt.execute();
 			if (added) {
 				System.out.println("The Address successfully added to database.");
@@ -80,6 +126,21 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return null;
 	}
@@ -94,17 +155,22 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 			return deleted;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return 0;
 	}
-
-	// @Override
-	public E update(E element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-=======
-public class AccountDao {
->>>>>>> c5c0616964400ded97c461b52bb80df23a30b868
-
 }
