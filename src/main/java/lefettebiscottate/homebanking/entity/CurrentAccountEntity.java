@@ -28,12 +28,12 @@ public class CurrentAccountEntity {
 
 			@Override
 			public boolean isVisible(Field arg0) {
-				return false;
+				return true;
 			}
 
 			@Override
 			public boolean isVisible(Method arg0) {
-				return false;
+				return true;
 			}
 			
 		});

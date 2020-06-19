@@ -6,6 +6,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
+
+import java.util.ArrayList;
+
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 
@@ -21,14 +26,14 @@ public class CurrentAccountResource {
 	private CurrentAccountDao currentAccountDao;
 	
 	@GET
-	@Path("{currentaccountId}")
+	@Path("id/{currentaccountId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@PathParam("currentaccountId") int id) {
 		return Response.ok(currentAccountDao.getById(id).toJson()).build();
 	}
 	
 	@GET
-	@Path("{iban}")
+	@Path("iban/{iban}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByIban(@PathParam("iban") String iban) {
 		return Response.ok(currentAccountDao.getByIban(iban).toJson()).build();
@@ -38,7 +43,10 @@ public class CurrentAccountResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		return Response.ok(currentAccountDao.getAll()).build();
+		ArrayList<CurrentAccountEntity> list = (ArrayList<CurrentAccountEntity>) currentAccountDao.getAll();
+		Jsonb jsonb = JsonbBuilder.create();
+		System.out.println(jsonb.toJson(list));
+		return Response.ok(jsonb.toJson(currentAccountDao.getAll())).build();
 	}
 	
 	
