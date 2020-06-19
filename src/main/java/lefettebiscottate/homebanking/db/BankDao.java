@@ -43,7 +43,7 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 				con.close();
 			}
 		}
-		return bank;
+		return (E) bank;
 	}
 
 	// @Override
