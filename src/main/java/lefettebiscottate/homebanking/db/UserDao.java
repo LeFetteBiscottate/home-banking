@@ -179,8 +179,8 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 
 	public boolean update(UserEntity u) {
 		boolean result;
-		String query = "UPDATE user SET email = ?, password = ?, phone = ? WHERE id = ?";
-
+		String query = "UPDATE user SET email = ?, password = ?, phone = ?, registrato = ? WHERE id = ?";
+		
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, u.getEmail());
@@ -189,11 +189,11 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			stmt.setInt(4, u.getId());
 			result = true;
 			stmt.close();
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 			result = false;
 		}
-
+		
 		return result;
 	}
 

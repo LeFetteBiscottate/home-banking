@@ -194,9 +194,9 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 		AddressEntity address = (AddressEntity) element;
 		Statement stmt = null;
 		try {
-			String query = "UPDATE address SET via = " + address.getVia() + " civico =" + address.getCivico()
-					+ " comune =" + address.getComune() + " provincia =" + address.getProvincia() + " regione ="
-					+ address.getRegione() + " stato =" + address.getStato() + " cap=" + address.getCap()
+			String query = "UPDATE address SET via = '" + address.getVia() + "' civico ='" + address.getCivico()
+					+ "' comune ='" + address.getComune() + "' provincia ='" + address.getProvincia() + "' regione ='"
+					+ address.getRegione() + "' stato ='" + address.getStato() + "' cap=" + address.getCap()
 					+ " WHERE id =" + address.getId() + " AND userId=" + address.getUser();
 			stmt = con.createStatement();
 			int updated = stmt.executeUpdate(query);

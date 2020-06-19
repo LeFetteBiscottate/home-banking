@@ -74,7 +74,7 @@ public class TransactionDao {
 	
 	
 	
-	public List<TransactionEntity> getByPeriod(LocalDate start, LocalDate end){
+	public List<TransactionEntity> getByPeriod(String start, String end){
 		List<TransactionEntity> transazioni = new ArrayList<TransactionEntity>();
 		
 		try {
@@ -132,7 +132,7 @@ public class TransactionDao {
 	}
 	
 	
-	public List<TransactionEntity> getByPeriodAndAccountId(LocalDate start, LocalDate end, int account_id){
+	public List<TransactionEntity> getByPeriodAndAccountId(String start, String end, int account_id){
 		List<TransactionEntity> transazioni = new ArrayList<TransactionEntity>();
 		
 		try {
