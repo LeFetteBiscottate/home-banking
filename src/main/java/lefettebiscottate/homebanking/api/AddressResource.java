@@ -1,6 +1,7 @@
 package lefettebiscottate.homebanking.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -35,7 +36,7 @@ public class AddressResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		ArrayList<AddressEntity> list = (ArrayList<AddressEntity>) addressDao.getAll();
+		List<AddressEntity> list = addressDao.getAll();
 		Jsonb jsonb = JsonbBuilder.create();
 		System.out.println(jsonb.toJson(list));
 		return Response.ok(jsonb.toJson(addressDao.getAll())).build();

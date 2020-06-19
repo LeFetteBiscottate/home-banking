@@ -19,130 +19,125 @@ import lefettebiscottate.homebanking.entity.BankEntity;
 import lefettebiscottate.homebanking.entity.Gender;
 import lefettebiscottate.homebanking.entity.UserEntity;
 
-public class UserDao {//implements Dao<UserEntity, Integer> {
+public class UserDao {// implements Dao<UserEntity, Integer> {
 
 	private static Connection con = DBConnection.getConnection();
 	private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-
 	public UserEntity getById(int id) {
-		
+
 		UserEntity u = new UserEntity();
-		
+
 		try {
-			String query = "SELECT * FROM user WHERE id = "+id;
+			String query = "SELECT * FROM user WHERE id = " + id;
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			
-			while(rs.next()){
-				u.setName(rs.getString(1));
-				u.setSurname(rs.getString(2));
-				u.setBirthdate(rs.getDate(3).toLocalDate());
-				u.setEmail(rs.getString(4));
-				u.setPassword(rs.getString(5));
-				u.setPhonenumber(rs.getString(6));
-				u.setFiscal_code(rs.getString(7));
-				u.setGender(Gender.valueOf(rs.getString(8)));
-				u.setAccount_type(AccountType.valueOf(rs.getString(9)));
-				u.setRegistrato(rs.getBoolean(10));
-				u.setPartita_IVA(rs.getString(11));
-				u.setBank((BankEntity) new BankDao().getOne(rs.getInt(12)));
+
+			while (rs.next()) {
+				u.setName(rs.getString("name"));
+				u.setSurname(rs.getString("surname"));
+				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
+				u.setEmail(rs.getString("email"));
+				u.setPassword(rs.getString("password"));
+				u.setPhonenumber(rs.getString("phone"));
+				u.setFiscal_code(rs.getString("codicefiscale"));
+				u.setGender(Gender.valueOf(rs.getString("gender")));
+				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
+				u.setRegistrato(rs.getBoolean("registrato"));
+				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setId(rs.getInt("id"));
+				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
 			}
-			
+
 			rs.close();
 			stmt.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return u;
 	}
-	
-	
-	
+
 	public UserEntity getByEmail(String email) {
-		
+
 		UserEntity u = new UserEntity();
-		
+
 		try {
-			String query = "SELECT * FROM user WHERE email = '"+email+"'";
+			String query = "SELECT * FROM user WHERE email = '" + email + "'";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			
-			while(rs.next()){
-				u.setName(rs.getString(1));
-				u.setSurname(rs.getString(2));
-				u.setBirthdate(rs.getDate(3).toLocalDate());
-				u.setEmail(rs.getString(4));
-				u.setPassword(rs.getString(5));
-				u.setPhonenumber(rs.getString(6));
-				u.setFiscal_code(rs.getString(7));
-				u.setGender(Gender.valueOf(rs.getString(8)));
-				u.setAccount_type(AccountType.valueOf(rs.getString(9)));
-				u.setRegistrato(rs.getBoolean(10));
-				u.setPartita_IVA(rs.getString(11));
-				u.setBank((BankEntity) new BankDao().getOne(rs.getInt(12)));
+
+			while (rs.next()) {
+				u.setName(rs.getString("name"));
+				u.setSurname(rs.getString("surname"));
+				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
+				u.setEmail(rs.getString("email"));
+				u.setPassword(rs.getString("password"));
+				u.setPhonenumber(rs.getString("phone"));
+				u.setFiscal_code(rs.getString("codicefiscale"));
+				u.setGender(Gender.valueOf(rs.getString("gender")));
+				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
+				u.setRegistrato(rs.getBoolean("registrato"));
+				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setId(rs.getInt("id"));
+				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
 			}
-			
+
 			rs.close();
 			stmt.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return u;
 	}
-	
-	
-	
-	public List<UserEntity> getAll(){
-		
+
+	public List<UserEntity> getAll() {
+
 		List<UserEntity> utenti = new ArrayList<UserEntity>();
-		
+
 		try {
 			String query = "SELECT * FROM user";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				UserEntity u = new UserEntity();
-				u.setName(rs.getString(1));
-				u.setSurname(rs.getString(2));
-				u.setBirthdate(rs.getDate(3).toLocalDate());
-				u.setEmail(rs.getString(4));
-				u.setPassword(rs.getString(5));
-				u.setPhonenumber(rs.getString(6));
-				u.setFiscal_code(rs.getString(7));
-				u.setGender(Gender.valueOf(rs.getString(8)));
-				u.setAccount_type(AccountType.valueOf(rs.getString(9)));
-				u.setRegistrato(rs.getBoolean(10));
-				u.setPartita_IVA(rs.getString(11));
-				u.setBank((BankEntity) new BankDao().getOne(rs.getInt(12)));
 				
+				u.setName(rs.getString("name"));
+				u.setSurname(rs.getString("surname"));
+				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
+				u.setEmail(rs.getString("email"));
+				u.setPassword(rs.getString("password"));
+				u.setPhonenumber(rs.getString("phone"));
+				u.setFiscal_code(rs.getString("codicefiscale"));
+				u.setGender(Gender.valueOf(rs.getString("gender")));
+				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
+				u.setRegistrato(rs.getBoolean("registrato"));
+				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setId(rs.getInt("id"));
+				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+
 				utenti.add(u);
 			}
-			
+
 			rs.close();
 			stmt.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return utenti;
 	}
-	
-	
-	
+
 	public boolean insert(UserEntity u) {
 		boolean result = false;
-		
-		try {
-			
-			String sql = "INSERT INTO user (name, surname, birthdate, email, password, phone, codicefiscale, gender,"
-					+ " account_type, registrato, partitaIVA, bank_id)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			
+		try {
+
+			String sql = "INSERT INTO user (name, surname, birthdate, email, password, phone, codicefiscale, gender,"
+					+ " account_type, registrato, partitaIVA, bank_id)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, u.getName());
@@ -157,41 +152,35 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 			pstmt.setBoolean(10, u.isRegistrato());
 			pstmt.setString(11, u.getPartita_IVA());
 			pstmt.setInt(12, u.getBank().getId());
-				
 
 			result = pstmt.execute();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
 		}
 		return result;
 	}
-	
-	
-	
-	
+
 	public boolean delete(UserEntity u) {
 		boolean result = false;
 		String query = "DELETE FROM user WHERE id = ?";
-		
+
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, u.getId());
 			result = true;
 			stmt.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
 		}
 		return result;
 	}
-	
-	
-	
+
 	public boolean update(UserEntity u) {
 		boolean result;
 		String query = "UPDATE user SET email = ?, password = ?, phone = ? WHERE id = ?";
-		
+
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, u.getEmail());
@@ -200,30 +189,16 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 			stmt.setInt(4, u.getId());
 			result = true;
 			stmt.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
 		}
-		
+
 		return result;
 	}
-	
-}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+}
+
 //	@Override 
 //	public Future<E> getOne(Integer primaryKey) {
 //		
@@ -353,7 +328,6 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 //
 //	}
 
-		
 //		return null;
 //	}
 //
@@ -394,15 +368,15 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 //			}
 //			return utenti;
 //		});
-		
+
 //	}
 
 //	@Override
 //	public Future<E> insert(E element) {
-		//CompletableFuture<E> future = (CompletableFuture<E>) CompletableFuture.supplyAsync(() -> "hello");
-		
-		//return null;
+// CompletableFuture<E> future = (CompletableFuture<E>)
+// CompletableFuture.supplyAsync(() -> "hello");
 
+// return null;
 
 //		return executor.submit(() -> {
 //			
@@ -444,9 +418,9 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 //
 //	}
 
-	//@Override
-	//public Future<Integer> delete(Integer primaryKey) {
-		
+// @Override
+// public Future<Integer> delete(Integer primaryKey) {
+
 //		return executor.submit(() -> {
 //			String query = "DELETE FROM user WHERE id = "+primarykey;
 //			
@@ -454,12 +428,10 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 //			ResultSet rs = stmt.executeUpdate(query);
 //		});
 //		
-	//	return null;
-	//}
+// return null;
+// }
 
-	//@Override
-	//public Future<UserEntity> update(UserEntity element) {
+// @Override
+// public Future<UserEntity> update(UserEntity element) {
 
-		
-	//}
-
+// }

@@ -118,7 +118,7 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 		PreparedStatement stmt = null;
 		try {
 
-			String query = "INSERT * INTO address (via,civico,comune,provincia,regione,stato,cap,user_id) VALUES(?,?,?,?,?,?,?,?)"; // Will
+			String query = "INSERT INTO address (via,civico,comune,provincia,regione,stato,cap,user_id) VALUES(?,?,?,?,?,?,?,?)"; // Will
 																																	// be
 																																	// modified
 			stmt = con.prepareStatement(query);
@@ -126,10 +126,11 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 			stmt.setString(2, addr.getCivico());
 			stmt.setString(3, addr.getComune());
 			stmt.setString(4, addr.getProvincia());
-			stmt.setString(4, addr.getRegione());
-			stmt.setString(4, addr.getStato());
-			stmt.setInt(4, addr.getCap());
-			stmt.setInt(4, addr.getUser());
+			stmt.setString(5, addr.getRegione());
+			stmt.setString(6, addr.getStato());
+			stmt.setInt(7, addr.getCap());
+			stmt.setInt(8, addr.getUser());
+			
 			boolean added = stmt.execute();
 			if (added) {
 				System.out.println("The Address successfully added to database.");

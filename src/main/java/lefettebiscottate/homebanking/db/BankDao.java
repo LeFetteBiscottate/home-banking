@@ -26,8 +26,9 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				String filiale_description = rs.getString("filiale_description");
-				bank = new BankEntity(name, filiale_description);
+				String description_filiale = rs.getString("description_filiale");
+				bank = new BankEntity(name, description_filiale);
+				bank.setId(id);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,13 +47,13 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
 		}
 		return (E) bank;
 	}
@@ -72,7 +73,7 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				String filiale_description = rs.getString("filiale_description");
+				String filiale_description = rs.getString("description_filiale");
 				E bank = (E) new BankEntity(name, filiale_description); // problem is in constructor(Will be resolved)
 				banks.add(bank);
 			}
@@ -93,13 +94,13 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+//			if(con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
 		}
 		return banks;
 	}
@@ -113,7 +114,7 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 		try {
 			// in order to fetch list of users and filiali the should a foreign key in user
 			// and filiale table to bank table
-			String query = "INSERT * INTO bank (name,filiale_description) VALUES(?,?)"; // Will be modified
+			String query = "INSERT * INTO bank (name, description_filiale) VALUES(?,?)"; // Will be modified
 			stmt = con.prepareStatement(query);
 			stmt.setString(1, bank.getName());
 			stmt.setString(2, bank.getFiliale_description());
@@ -134,13 +135,13 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+//			if(con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
 		}
 		return null;
 	}
@@ -163,13 +164,13 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+//			if(con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
 		}
 		return 0;
 	}
