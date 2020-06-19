@@ -1,6 +1,7 @@
 package lefettebiscottate.homebanking.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -125,13 +126,14 @@ public class CurrentAccountDao {
 	
 	public boolean insert(CurrentAccountEntity c) {
 		
-		String query ="INSERT INTO currentaccount(iban, balance, account_id) VALUES"
-				+ "('"+c.getIban()+"', "+c.getBalance()+", "+c.getAccount().getId()+")";
+		String query ="INSERT INTO currentaccount(iban, balance, account_id) VALUES(?, ?, ?)";
 		boolean result = false;
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, c.getIban());
+			stmt.setDouble(2, c.getBalance());
+			stmt.setInt(3, c.getAccount().getId());
 			result = true;
 			stmt.close();
 		} catch (SQLException e) {
@@ -143,13 +145,13 @@ public class CurrentAccountDao {
 	
 	public boolean delete(CurrentAccountEntity c) {
 		
-		String query = "DELETE FROM currentaccount WHERE id = "+c.getId();
+		String query = "DELETE FROM currentaccount WHERE id = ?";
 		
 		boolean result = false;
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, c.getId());
 			result = true;
 			stmt.close();
 		} catch (SQLException e) {
@@ -163,10 +165,11 @@ public class CurrentAccountDao {
 	public boolean update(CurrentAccountEntity c) {
 		
 		boolean result = false;
-		String query ="UPADTE currentaccount SET balance = "+c.getBalance()+"WHERE id = "+c.getId();
+		String query ="UPADTE currentaccount SET balance = ? WHERE id = ?";
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setDouble(1, c.getBalance());
+			stmt.setInt(2, c.getId());
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {

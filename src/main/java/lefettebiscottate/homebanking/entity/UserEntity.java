@@ -18,6 +18,7 @@ public class UserEntity {
 	private AccountType account_type;
 	private String partita_IVA;
 	private boolean isRegistrato;
+	private BankEntity bank;
 
 	// Costruttori
 	public UserEntity() {
@@ -40,7 +41,7 @@ public class UserEntity {
 	 */
 	public UserEntity(String name, String surname, String email, LocalDate birthdate, String password,
 			String phonenumber, String fiscal_code, Gender gender, AccountType account_type, String partita_IVA,
-			boolean isRegistrato) {
+			boolean isRegistrato, BankEntity bank) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -52,6 +53,7 @@ public class UserEntity {
 		this.account_type = account_type;
 		this.partita_IVA = partita_IVA;
 		this.isRegistrato = isRegistrato;
+		this.bank = bank;
 	}
 
 	// Getter
@@ -148,7 +150,8 @@ public class UserEntity {
 	public String toString() {
 		return "UserEntity [name=" + name + ", surname=" + surname + ", email=" + email + ", birthdate=" + birthdate
 				+ ", password=" + password + ", phonenumber=" + phonenumber + ", fiscal_code=" + fiscal_code
-				+ ", gender=" + gender + ", account_type=" + account_type + ", partita_IVA=" + partita_IVA + "]";
+				+ ", gender=" + gender + ", account_type=" + account_type + ", partita_IVA=" + partita_IVA + "Bank = "
+				+this.bank+"]";
 	}
 
 	@Override
@@ -198,5 +201,15 @@ public class UserEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public BankEntity getBank() {
+		return bank;
+	}
+
+	public void setBank(BankEntity bank) {
+		this.bank = bank;
+	}
+	
+	
 
 }
