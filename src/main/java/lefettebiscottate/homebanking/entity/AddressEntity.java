@@ -1,5 +1,12 @@
 package lefettebiscottate.homebanking.entity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyVisibilityStrategy;
+
 public class AddressEntity {
 
 	private int id;
@@ -27,6 +34,25 @@ public class AddressEntity {
 		this.cap = cap;
 		this.userId = userId;
 	}
+	
+	
+	public String toJson() {
+		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
+
+			@Override
+			public boolean isVisible(Field arg0) {
+				return true;
+			}
+
+			@Override
+			public boolean isVisible(Method arg0) {
+				return true;
+			}
+			
+		});
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this);
+	}
+	
 
 	@Override
 	public boolean equals(Object o) {

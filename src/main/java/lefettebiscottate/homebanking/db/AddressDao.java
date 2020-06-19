@@ -15,7 +15,7 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 	private static Connection con = DBConnection.getConnection();
 
 	// @Override
-	public E getOne(K primaryKey) throws SQLException {
+	public E getOne(K primaryKey) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		E address = null;
@@ -39,13 +39,25 @@ public class AddressDao<E, K> {// implements Dao<E,K> {
 			e.printStackTrace();
 		} finally {
 			if (rs != null) {
-				rs.close();
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			if (stmt != null) {
-				stmt.close();
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			if (con != null) {
-				con.close();
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return address;
