@@ -190,7 +190,7 @@ public class UserDao {//implements Dao<UserEntity, Integer> {
 	
 	public boolean update(UserEntity u) {
 		boolean result;
-		String query = "UPDATE user SET email = ?, password = ?, phone = ? WHERE id = ?";
+		String query = "UPDATE user SET email = ?, password = ?, phone = ?, registrato = ? WHERE id = ?";
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
