@@ -7,35 +7,16 @@ public class BankEntity {
 
 	private int id;
 	private String name;
-	private List<String> filiali;
-	private List<UserEntity> userList;
+	private String filiale_description;
 
 	public BankEntity() {
-		this.filiali = new ArrayList<String>();
-		this.userList = new ArrayList<UserEntity>();
 	}
 
-	public BankEntity(String name) {
+	public BankEntity(String name, String filiale_description) {
 		this.name = name;
-		this.filiali = new ArrayList<String>();
-		this.userList = new ArrayList<UserEntity>();
+		this.filiale_description = filiale_description;
 	}
 
-	public boolean addFiliale(String filiale) {
-		if (!this.filiali.contains(filiale)) {
-			this.filiali.add(filiale);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean addUser(UserEntity user) {
-		if (!this.userList.contains(user)) {
-			this.userList.add(user);
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -58,10 +39,7 @@ public class BankEntity {
 
 	@Override
 	public String toString() {
-		String stringa = "Banca:\n" + this.name + "\nFiliali:\n";
-		for (String filiale : this.filiali) {
-			stringa += filiale.toString() + "\n";
-		}
+		String stringa = "Banca:\n" + this.name+"\n"+this.filiale_description;
 		return stringa;
 	}
 
@@ -81,20 +59,14 @@ public class BankEntity {
 		this.name = name;
 	}
 
-	public List<String> getFiliali() {
-		return filiali;
+	public String getFiliale_description() {
+		return filiale_description;
 	}
 
-	public void setFiliali(List<String> filiali) {
-		this.filiali = filiali;
+	public void setFiliale_description(String filiale_description) {
+		this.filiale_description = filiale_description;
 	}
-
-	public List<UserEntity> getUserList() {
-		return userList;
-	}
-
-	public void setUserList(List<UserEntity> userList) {
-		this.userList = userList;
-	}
+	
+	
 
 }

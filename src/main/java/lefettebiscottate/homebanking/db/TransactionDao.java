@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -163,13 +164,16 @@ public class TransactionDao {
 	public boolean insert(TransactionEntity t) {
 		boolean result = false;
 		String query = "INSERT INTO transaction VALUES(date, source, destination, description,"
-				+ "account_id, importo) VALUES ("
-				+t.getTransaction_date()+", '"+t.getSource()+"', '"+t.getDestination()+"', '"+t.getDescription()
-				+"', "+t.getAccount().getId()+", "+t.getImporto()+")";
+				+ "account_id, importo) VALUES (?, ?, ?, ?, ?, ?)";
 				
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, t.getTransaction_date().toString());
+			stmt.setString(2, t.getSource());
+			stmt.setString(3, t.getDestination());
+			stmt.setString(4, t.getDestination());
+			stmt.setInt(5, t.getAccount().getId());
+			stmt.setDouble(6, t.getImporto());
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {
@@ -181,13 +185,14 @@ public class TransactionDao {
 	
 	public boolean update(TransactionEntity t) {
 		boolean result = false;
-		String query = "UPDATE transaction SET destination = '"+t.getDestination()+"', description = '"+
-						t.getDescription()+"', importo = "+t.getImporto()+
-						" WHERE id = "+t.getId();
+		String query = "UPDATE transaction SET destination = ?, description = ?, importo = ? WHERE id = ?";
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, t.getDestination());
+			stmt.setString(2, t.getDescription());
+			stmt.setDouble(3, t.getImporto());
+			stmt.setInt(4, t.getId());
 			result = true;
 			stmt.close();
 		} catch(SQLException e) {
@@ -200,11 +205,11 @@ public class TransactionDao {
 	
 	public boolean delete(TransactionEntity t) {
 		boolean result = false;
-		String query = "DELETE FROM transaction WHERE id = "+t.getId();
+		String query = "DELETE FROM transaction WHERE id = ?";
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, t.getId());
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {

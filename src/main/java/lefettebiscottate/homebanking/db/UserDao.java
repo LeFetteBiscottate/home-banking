@@ -15,10 +15,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import lefettebiscottate.homebanking.entity.AccountType;
+import lefettebiscottate.homebanking.entity.BankEntity;
 import lefettebiscottate.homebanking.entity.Gender;
 import lefettebiscottate.homebanking.entity.UserEntity;
 
-public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
+public class UserDao {//implements Dao<UserEntity, Integer> {
 
 	private static Connection con = DBConnection.getConnection();
 	private ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -42,9 +43,10 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 				u.setPhonenumber(rs.getString(6));
 				u.setFiscal_code(rs.getString(7));
 				u.setGender(Gender.valueOf(rs.getString(8)));
-				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
-				u.setRegistrato(rs.getBoolean("registrato"));
-				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setAccount_type(AccountType.valueOf(rs.getString(9)));
+				u.setRegistrato(rs.getBoolean(10));
+				u.setPartita_IVA(rs.getString(11));
+				u.setBank((BankEntity) new BankDao().getOne(rs.getInt(12)));
 			}
 			
 			rs.close();
@@ -76,9 +78,10 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 				u.setPhonenumber(rs.getString(6));
 				u.setFiscal_code(rs.getString(7));
 				u.setGender(Gender.valueOf(rs.getString(8)));
-				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
-				u.setRegistrato(rs.getBoolean("registrato"));
-				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setAccount_type(AccountType.valueOf(rs.getString(9)));
+				u.setRegistrato(rs.getBoolean(10));
+				u.setPartita_IVA(rs.getString(11));
+				u.setBank((BankEntity) new BankDao().getOne(rs.getInt(12)));
 			}
 			
 			rs.close();
@@ -114,6 +117,7 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 				u.setAccount_type(AccountType.valueOf(rs.getString(9)));
 				u.setRegistrato(rs.getBoolean(10));
 				u.setPartita_IVA(rs.getString(11));
+				u.setBank((BankEntity) new BankDao().getOne(rs.getInt(12)));
 				
 				utenti.add(u);
 			}
@@ -134,8 +138,9 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 		
 		try {
 			
-			String sql = "INSERT INTO user (name, surname, birthdate, email, password, phone, codicefiscale, gender, account_type, registrato, partitaIVA)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO user (name, surname, birthdate, email, password, phone, codicefiscale, gender,"
+					+ " account_type, registrato, partitaIVA, bank_id)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -151,6 +156,7 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 			pstmt.setString(9, u.getAccount_type().toString());
 			pstmt.setBoolean(10, u.isRegistrato());
 			pstmt.setString(11, u.getPartita_IVA());
+			pstmt.setInt(12, u.getBank().getId());
 				
 
 			result = pstmt.execute();
@@ -166,11 +172,11 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 	
 	public boolean delete(UserEntity u) {
 		boolean result = false;
-		String query = "DELETE FROM user WHERE id = "+u.getId();
+		String query = "DELETE FROM user WHERE id = ?";
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, u.getId());
 			result = true;
 			stmt.close();
 		} catch(SQLException e) {
@@ -184,12 +190,14 @@ public class UserDao<E, K> {//implements Dao<UserEntity, Integer> {
 	
 	public boolean update(UserEntity u) {
 		boolean result;
-		String query = "UPDATE user SET email = '"+u.getEmail()+"', password = '"+u.getPassword()+"', phone = '"
-						+u.getPhonenumber()+"' WHERE id = "+u.getId();
+		String query = "UPDATE user SET email = ?, password = ?, phone = ? WHERE id = ?";
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, u.getEmail());
+			stmt.setString(2, u.getPassword());
+			stmt.setString(3, u.getPhonenumber());
+			stmt.setInt(4, u.getId());
 			result = true;
 			stmt.close();
 		} catch(SQLException e) {

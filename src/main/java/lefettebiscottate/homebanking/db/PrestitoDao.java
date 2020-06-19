@@ -1,6 +1,7 @@
 package lefettebiscottate.homebanking.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -85,14 +86,18 @@ public class PrestitoDao {
 	public boolean insert(PrestitoEntity p) {
 		boolean result = false;
 		String query = "INSERT INTO prestito VALUES(import, interest, account_id, numero_rata,"
-				+ "importo_rata, durata, numero_rata_mancanti, prestito_type) VALUES ("
-				+p.getImporto()+", "+p.getInterest()+", "+p.getAccount().getId()+", "+p.getN_rata()
-				+", "+p.getI_rata()+", '"+p.getDurata()+"', "+p.getNumero_rata_mancanti()+", '"
-				+p.getType()+"')";
+				+ "importo_rata, durata, numero_rata_mancanti, prestito_type) VALUES (?,?,?,?,?,?,?,?)";
 				
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setDouble(1, p.getImporto());
+			stmt.setDouble(2, p.getInterest());
+			stmt.setInt(3, p.getAccount().getId());
+			stmt.setInt(4, p.getN_rata());
+			stmt.setDouble(5, p.getI_rata());
+			stmt.setString(6, p.getDurata());
+			stmt.setInt(7, p.getNumero_rata_mancanti());
+			stmt.setString(8, p.getType().toString());
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {
@@ -105,12 +110,12 @@ public class PrestitoDao {
 	
 	public boolean update(PrestitoEntity p) {
 		boolean result = false;
-		String query = "UPDATE prestito SET numero_rata_mancanti = "+p.getNumero_rata_mancanti()+
-						"WHERE id = "+p.getId();
+		String query = "UPDATE prestito SET numero_rata_mancanti = ? WHERE id = ?";
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, p.getNumero_rata_mancanti());
+			stmt.setInt(2, p.getId());
 			result = true;
 			stmt.close();
 		} catch(SQLException e) {
@@ -122,11 +127,11 @@ public class PrestitoDao {
 	
 	public boolean delete(PrestitoEntity p) {
 		boolean result = false;
-		String query = "DELETE FROM prestito WHERE id = "+p.getId();
+		String query = "DELETE FROM prestito WHERE id = ?";
 		
 		try {
-			Statement stmt = con.createStatement();
-			int rs = stmt.executeUpdate(query);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, p.getId());
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {
