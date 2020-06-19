@@ -1,7 +1,13 @@
 package lefettebiscottate.homebanking.entity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyVisibilityStrategy;
 
 public class BankEntity {
 
@@ -15,6 +21,24 @@ public class BankEntity {
 	public BankEntity(String name, String filiale_description) {
 		this.name = name;
 		this.filiale_description = filiale_description;
+	}
+	
+	
+	public String toJson() {
+		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
+
+			@Override
+			public boolean isVisible(Field arg0) {
+				return false;
+			}
+
+			@Override
+			public boolean isVisible(Method arg0) {
+				return false;
+			}
+			
+		});
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this);
 	}
 
 

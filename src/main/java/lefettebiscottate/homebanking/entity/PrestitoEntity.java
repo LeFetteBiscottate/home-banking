@@ -1,5 +1,12 @@
 package lefettebiscottate.homebanking.entity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyVisibilityStrategy;
+
 public class PrestitoEntity {
 
 	private int id;
@@ -26,6 +33,24 @@ public class PrestitoEntity {
 		this.durata = durata;
 		this.numero_rata_mancanti = numero_rata_mancanti;
 		this.type = type;
+	}
+	
+	
+	public String toJson() {
+		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
+
+			@Override
+			public boolean isVisible(Field arg0) {
+				return false;
+			}
+
+			@Override
+			public boolean isVisible(Method arg0) {
+				return false;
+			}
+			
+		});
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this);
 	}
 	
 	

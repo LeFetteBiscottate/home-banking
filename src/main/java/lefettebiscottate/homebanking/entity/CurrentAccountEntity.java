@@ -1,5 +1,12 @@
 package lefettebiscottate.homebanking.entity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyVisibilityStrategy;
+
 public class CurrentAccountEntity {
 
 	private int id;
@@ -14,6 +21,37 @@ public class CurrentAccountEntity {
 		this.balance = balance;
 		this.account = account;
 	}
+	
+	
+	public String toJson() {
+		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
+
+			@Override
+			public boolean isVisible(Field arg0) {
+				return false;
+			}
+
+			@Override
+			public boolean isVisible(Method arg0) {
+				return false;
+			}
+			
+		});
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this);
+	}
+	
+	
+	public double withdraw(double importo) {
+		if(this.balance >= importo)
+			this.balance -= importo;
+		return this.balance;
+	}
+	
+	
+	public double deposit(double importo) {
+		return this.balance += importo;
+	}
+	
 	
 	@Override
 	public boolean equals(Object o) {

@@ -1,6 +1,13 @@
 package lefettebiscottate.homebanking.entity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
+
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.config.PropertyVisibilityStrategy;
 
 import lefettebiscottate.homebanking.utils.Validation;
 
@@ -55,6 +62,26 @@ public class UserEntity {
 		this.isRegistrato = isRegistrato;
 		this.bank = bank;
 	}
+	
+	
+	public String toJson() {
+		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
+
+			@Override
+			public boolean isVisible(Field arg0) {
+				return true;
+			}
+
+			@Override
+			public boolean isVisible(Method arg0) {
+				return true;
+			}
+			
+		});
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this); //JsonbBuilder.class.newInstance().withConfig(config).to
+	}
+	
+	
 
 	// Getter
 	public String getName() {

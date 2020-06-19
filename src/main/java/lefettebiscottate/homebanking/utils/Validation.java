@@ -31,7 +31,7 @@ public class Validation {
 //	
 	
 	
-	
+//	Deve essere inserito il metodo per compattare il numero della carta
 	
 	
 	public static boolean validateName(Object o, String name) {

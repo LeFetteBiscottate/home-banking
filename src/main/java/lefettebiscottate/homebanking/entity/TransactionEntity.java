@@ -1,6 +1,12 @@
 package lefettebiscottate.homebanking.entity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
+
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyVisibilityStrategy;
 
 public class TransactionEntity {
 	
@@ -24,6 +30,24 @@ public class TransactionEntity {
 		this.account = account;
 		this.importo = importo;
 		this.type = type;
+	}
+	
+	
+	public String toJson() {
+		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
+
+			@Override
+			public boolean isVisible(Field arg0) {
+				return false;
+			}
+
+			@Override
+			public boolean isVisible(Method arg0) {
+				return false;
+			}
+			
+		});
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this);
 	}
 	
 	
