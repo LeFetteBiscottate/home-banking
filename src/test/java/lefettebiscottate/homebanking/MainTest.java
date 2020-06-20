@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -14,15 +17,15 @@ import lefettebiscottate.homebanking.db.*;
 import lefettebiscottate.homebanking.entity.*;
 
 class MainTest {
-	
+
 	@Test
 	@Disabled
 	void tast_retrieveBankInfo() {
 		BankEntity be = new BankDao<BankEntity, Integer>().getOne(1);
-		
+
 		// assert
 		int result = 1;
-		
+
 		// verify
 		assertEquals(be.getId(), result);
 	}
@@ -42,12 +45,8 @@ class MainTest {
 		Boolean isRegistrato = true;
 		String partita_IVA = null;
 
-
-
 		UserEntity johnDenver = new UserEntity(name, surname, email, birthdate, password, phonenumber, fiscal_code,
 				gender, account_type, partita_IVA, isRegistrato, new BankDao<BankEntity, Integer>().getOne(1));
-		
-
 
 		UserDao ud = new UserDao();
 
@@ -55,8 +54,9 @@ class MainTest {
 
 		System.out.println(fu);
 	}
-	
+
 	@Test
+	@Disabled
 	void test_addressInsert() {
 		String via = "Via Michelangelo Vattelappesca";
 		String civico = "45/A";
@@ -65,17 +65,17 @@ class MainTest {
 		String stato = "Italia";
 		String regione = "Lazio";
 		int cap = 00123;
-	
-		AddressEntity indirizzoDiJohn = new AddressEntity(via, civico, comune, provincia, regione, stato, cap, new UserDao().getById(2).getId());
-		
+
+		AddressEntity indirizzoDiJohn = new AddressEntity(via, civico, comune, provincia, regione, stato, cap,
+				new UserDao().getById(2).getId());
+
 		AddressDao<AddressEntity, Integer> ad = new AddressDao<>();
-		
+
 		ad.insert(indirizzoDiJohn);
-		
-		
-	System.out.println("1: " + new UserDao().getById(2).getId());
-	System.out.println("2: " + new UserDao().getByEmail("johndenver@gmail.com").getId());
-	
+
+		System.out.println("1: " + new UserDao().getById(2).getId());
+		System.out.println("2: " + new UserDao().getByEmail("johndenver@gmail.com").getId());
+
 	}
 
 //	@Test
@@ -84,5 +84,16 @@ class MainTest {
 //
 //		System.out.println(aeList);
 //	}
+
+	@Test
+	void test_userToJson() {
+		
+		UserDao ud = new UserDao();
+		
+		Jsonb jsonb = JsonbBuilder.create();
+		
+		System.out.println(jsonb.toJson(ud.getAll()).toString());
+
+	}
 
 }
