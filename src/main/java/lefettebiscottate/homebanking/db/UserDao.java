@@ -26,7 +26,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 
 	public UserEntity getById(int id) {
 
-		UserEntity u = new UserEntity();
+		UserEntity u = null;
 
 		try {
 			String query = "SELECT * FROM user WHERE id = " + id;
@@ -34,6 +34,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			ResultSet rs = stmt.executeQuery(query);
 
 			while (rs.next()) {
+				u = new UserEntity();
 				u.setName(rs.getString("name"));
 				u.setSurname(rs.getString("surname"));
 				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
@@ -60,7 +61,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 
 	public UserEntity getByEmail(String email) {
 
-		UserEntity u = new UserEntity();
+		UserEntity u = null;
 
 		try {
 			String query = "SELECT * FROM user WHERE email = '" + email + "'";
@@ -68,6 +69,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			ResultSet rs = stmt.executeQuery(query);
 
 			while (rs.next()) {
+				u = new UserEntity();
 				u.setName(rs.getString("name"));
 				u.setSurname(rs.getString("surname"));
 				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
@@ -129,6 +131,45 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 
 		return utenti;
 	}
+	
+	
+	public List<UserEntity> getUserNotRegistered(){
+		List<UserEntity> utenti = new ArrayList<UserEntity>();
+		
+		try {
+			String query = "SELECT * FROM user WHERE registrato = 0";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				UserEntity u = new UserEntity();
+				
+				u.setName(rs.getString("name"));
+				u.setSurname(rs.getString("surname"));
+				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
+				u.setEmail(rs.getString("email"));
+				u.setPassword(rs.getString("password"));
+				u.setPhonenumber(rs.getString("phone"));
+				u.setFiscal_code(rs.getString("codicefiscale"));
+				u.setGender(Gender.valueOf(rs.getString("gender")));
+				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
+				u.setRegistrato(rs.getBoolean("registrato"));
+				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setId(rs.getInt("id"));
+				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+
+				utenti.add(u);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return utenti;
+	}
+	
 
 	public boolean insert(UserEntity u) {
 		boolean result = false;
@@ -149,7 +190,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			pstmt.setString(7, u.getFiscal_code());
 			pstmt.setString(8, u.getGender().toString());
 			pstmt.setString(9, u.getAccount_type().toString());
-			pstmt.setBoolean(10, u.isRegistrato());
+			pstmt.setBoolean(10, false);
 			pstmt.setString(11, u.getPartita_IVA());
 			pstmt.setInt(12, u.getBank().getId());
 
@@ -160,6 +201,24 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 		}
 		return result;
 	}
+	
+	
+	public boolean confermaRegistrazione(UserEntity u) {
+		boolean result = false;
+		String query = "UPDATE user SET registrato = ? WHERE id = ?";
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setBoolean(1, true);
+			stmt.setInt(2, u.getId());
+			result = true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+	
 
 	public boolean delete(UserEntity u) {
 		boolean result = false;
@@ -176,6 +235,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 		}
 		return result;
 	}
+	
 
 	public boolean update(UserEntity u) {
 		boolean result;

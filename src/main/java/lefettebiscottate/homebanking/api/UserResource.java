@@ -43,6 +43,13 @@ public class UserResource {
 		return Response.ok(jsonb.toJson(userDao.getAll())).build();
 	}
 	
+	@GET
+	@Path("/notRegistered")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUsersNotRegistered() {
+		Jsonb jsonb = JsonbBuilder.create();
+		return Response.ok(jsonb.toJson(userDao.getUserNotRegistered())).build();
+	}
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -63,6 +70,18 @@ public class UserResource {
 			return Response.ok(u.toJson()).build();
 		else
 			return Response.status(Response.Status.CONFLICT).entity("Utente non presente nel DB").build();
+	}
+	
+	
+	@PUT
+	@Path("confirmation/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response confermaUser(UserEntity u) {
+		if(userDao.confermaRegistrazione(u))
+			return Response.ok(u.toJson()).build();
+		else
+			return Response.status(Response.Status.CONFLICT).build();
 	}
 	
 	
