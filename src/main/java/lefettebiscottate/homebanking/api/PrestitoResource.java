@@ -19,7 +19,7 @@ import lefettebiscottate.homebanking.entity.PrestitoEntity;
 @Path("/prestito")
 public class PrestitoResource {
 	
-	private PrestitoDao prestitoDao;
+	private PrestitoDao prestitoDao = new PrestitoDao();
 	
 	@GET
 	@Path("accountId/{accountId}")

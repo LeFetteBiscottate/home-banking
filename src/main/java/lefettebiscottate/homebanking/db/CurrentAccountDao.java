@@ -15,9 +15,11 @@ public class CurrentAccountDao {
 	
 	private static Connection con = DBConnection.getConnection();
 	
+	private AccountDao<AccountEntity, Integer> accountDao;
+	
 	public CurrentAccountEntity getById(int id) {
 		
-		CurrentAccountEntity c = new CurrentAccountEntity();
+		CurrentAccountEntity c = null;
 		
 		try {
 			
@@ -26,10 +28,11 @@ public class CurrentAccountDao {
 			ResultSet rs = stmt.executeQuery(query);
 			
 			while(rs.next()){
+				c = new CurrentAccountEntity();
 				c.setId(rs.getInt(1));
 				c.setIban(rs.getString(2));
 				c.setBalance(rs.getDouble(3));
-				c.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
+				c.setAccount(accountDao.getOne(rs.getInt(4)));
 			}
 			
 			rs.close();
@@ -45,7 +48,7 @@ public class CurrentAccountDao {
 	
 	public CurrentAccountEntity getByIban(String iban) {
 		
-		CurrentAccountEntity c = new CurrentAccountEntity();
+		CurrentAccountEntity c = null;
 		
 		try {
 			
@@ -54,10 +57,11 @@ public class CurrentAccountDao {
 			ResultSet rs = stmt.executeQuery(query);
 			
 			while(rs.next()){
+				c = new CurrentAccountEntity();
 				c.setId(rs.getInt(1));
 				c.setIban(rs.getString(2));
 				c.setBalance(rs.getDouble(3));
-				c.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
+				c.setAccount(accountDao.getOne(rs.getInt(4)));
 			}
 			
 			rs.close();
@@ -85,7 +89,7 @@ public class CurrentAccountDao {
 				c.setId(rs.getInt(1));
 				c.setIban(rs.getString(2));
 				c.setBalance(rs.getDouble(3));
-				c.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
+				c.setAccount(accountDao.getOne(rs.getInt(4)));
 				
 				conti.add(c);
 			}
@@ -109,7 +113,7 @@ public class CurrentAccountDao {
 			
 			while(rs.next()) {
 				AccountEntity a;
-				a = (AccountEntity) new AccountDao().getOne(rs.getInt(4));
+				a = accountDao.getOne(rs.getInt(4));
 				
 				accounts.add(a);
 			}
@@ -140,7 +144,7 @@ public class CurrentAccountDao {
 			e.printStackTrace();
 			result = false;
 		}
-		return true;
+		return result;
 	}
 	
 	public boolean delete(CurrentAccountEntity c) {

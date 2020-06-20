@@ -13,14 +13,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import lefettebiscottate.homebanking.db.BankDao;
-import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.BankEntity;
 
 
 @Path("/bank")
 public class BankResource {
 	
-	private BankDao<BankEntity, Integer> bankDao;
+	private BankDao<BankEntity, Integer> bankDao = new BankDao<>();
 	
 	@GET
 	@Path("{bankId}")

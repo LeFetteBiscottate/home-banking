@@ -1,7 +1,6 @@
 package lefettebiscottate.homebanking.db;
 
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -15,10 +14,11 @@ import lefettebiscottate.homebanking.entity.TransactionEntity;
 public class TransactionDao {
 	
 	private static Connection con = DBConnection.getConnection();
+	private AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
 	
 	public TransactionEntity getById(int id) {
 		
-		TransactionEntity t = new TransactionEntity();
+		TransactionEntity t = null;
 		
 		try {
 			String query = "SELECT * FROM transaction WHERE id = "+id;
@@ -26,12 +26,13 @@ public class TransactionDao {
 			ResultSet rs = stmt.executeQuery(query);
 			
 			while(rs.next()){
+				t = new TransactionEntity();
 				t.setId(rs.getInt(1));
 				t.setTransaction_date(rs.getDate(2).toLocalDate());
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
+				t.setAccount(accountDao.getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 			}
 			
@@ -61,7 +62,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
+				t.setAccount(accountDao.getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);
@@ -91,7 +92,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
+				t.setAccount(accountDao.getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);
@@ -120,7 +121,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
+				t.setAccount(accountDao.getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);
@@ -149,7 +150,7 @@ public class TransactionDao {
 				t.setSource(rs.getString(3));
 				t.setDestination(rs.getString(4));
 				t.setDescription(rs.getString(5));
-				t.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(6)));
+				t.setAccount(accountDao.getOne(rs.getInt(6)));
 				t.setImporto(rs.getDouble(7));
 				
 				transazioni.add(t);

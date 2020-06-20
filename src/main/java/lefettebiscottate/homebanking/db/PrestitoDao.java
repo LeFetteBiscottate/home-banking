@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AccountEntity;
-import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
 import lefettebiscottate.homebanking.entity.TipoPrestito;
 
@@ -17,8 +16,10 @@ public class PrestitoDao {
 	
 	private static Connection con = DBConnection.getConnection();
 	
+	private AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
+	
 	public PrestitoEntity getByIdAccount(int account_id) {
-		PrestitoEntity p = new PrestitoEntity();
+		PrestitoEntity p = null;
 		
 		try {
 			
@@ -27,10 +28,11 @@ public class PrestitoDao {
 			ResultSet rs = stmt.executeQuery(query);
 			
 			while(rs.next()){
+				p = new PrestitoEntity();
 				p.setId(rs.getInt(1));
 				p.setImporto(rs.getDouble(2));
 				p.setInterest(rs.getDouble(3));
-				p.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
+				p.setAccount(accountDao.getOne(rs.getInt(4)));
 				p.setN_rata(rs.getInt(5));
 				p.setI_rata(rs.getDouble(6));
 				p.setDurata(rs.getString(7));
@@ -62,7 +64,7 @@ public class PrestitoDao {
 				 p.setId(rs.getInt(1));
 				 p.setImporto(rs.getDouble(2));
 				 p.setInterest(rs.getDouble(3));
-			     p.setAccount((AccountEntity) new AccountDao().getOne(rs.getInt(4)));
+			     p.setAccount(accountDao.getOne(rs.getInt(4)));
 				 p.setN_rata(rs.getInt(5));
 				 p.setI_rata(rs.getDouble(6));
 				 p.setDurata(rs.getString(7));

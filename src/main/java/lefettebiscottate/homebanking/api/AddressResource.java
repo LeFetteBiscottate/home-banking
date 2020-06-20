@@ -1,6 +1,5 @@
 package lefettebiscottate.homebanking.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.bind.Jsonb;
@@ -22,7 +21,7 @@ import lefettebiscottate.homebanking.entity.AddressEntity;
 @Path("/address")
 public class AddressResource {
 	
-	private AddressDao<AddressEntity, Integer> addressDao;
+	private AddressDao<AddressEntity, Integer> addressDao = new AddressDao<>();
 	
 	
 	@GET

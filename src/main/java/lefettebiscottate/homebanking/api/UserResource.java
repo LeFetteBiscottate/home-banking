@@ -19,7 +19,7 @@ import lefettebiscottate.homebanking.entity.UserEntity;
 @Path("/user")
 public class UserResource {
 	
-	private UserDao userDao;
+	private UserDao userDao = new UserDao();
 	
 	@GET
 	@Path("userId/{userId}")

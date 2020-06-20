@@ -17,7 +17,7 @@ import lefettebiscottate.homebanking.entity.AccountEntity;
 
 public class AccountResource {
 	
-	private AccountDao<AccountEntity, Integer> accountDao;
+	private AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
 	
 	@GET
 	@Path("{accountId}")

@@ -7,12 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import lefettebiscottate.homebanking.entity.AccountType;
 import lefettebiscottate.homebanking.entity.BankEntity;
@@ -22,7 +16,6 @@ import lefettebiscottate.homebanking.entity.UserEntity;
 public class UserDao {// implements Dao<UserEntity, Integer> {
 
 	private static Connection con = DBConnection.getConnection();
-	private ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	public UserEntity getById(int id) {
 

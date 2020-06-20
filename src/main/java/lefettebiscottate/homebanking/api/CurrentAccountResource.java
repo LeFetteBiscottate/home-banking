@@ -23,7 +23,7 @@ import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 @Path("/currentaccount")
 public class CurrentAccountResource {
 	
-	private CurrentAccountDao currentAccountDao;
+	private CurrentAccountDao currentAccountDao = new CurrentAccountDao();
 	
 	@GET
 	@Path("id/{currentaccountId}")

@@ -19,7 +19,7 @@ import lefettebiscottate.homebanking.entity.TransactionEntity;
 @Path("/transaction")
 public class TransactionResource {
 	
-	private TransactionDao transactionDao;
+	private TransactionDao transactionDao = new TransactionDao();
 	
 	@GET
 	@Path("{transactionId}")
