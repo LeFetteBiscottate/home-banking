@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import lefettebiscottate.homebanking.db.AccountDao;
 import lefettebiscottate.homebanking.entity.AccountEntity;
 
+@Path("/account")
 public class AccountResource {
 	
 	private AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
