@@ -18,23 +18,23 @@ servers:
 - url: https://admin.swagger.io/v2
 - url: http://admin.swagger.io/v2
 tags:
-- name: currentAccount
-  description: Everything about your current Account
+- name: Prestito
+  description: Everything about your Prestito
   externalDocs:
     description: Find out more
     url: http://swagger.io
 paths:
-  /currentaccount/id/{currentaccountId}:
+  /prestito/{accountId}:
     get:  
       tags:
-      - Current account
-      summary: Find Current Account by ID
-      description: Returns a single Current account
-      operationId: getById
+      - Prestito
+      summary: Find Prestito by ID
+      description: Returns a single Account Entity
+      operationId: getByAccountId
       parameters:
-      - name: currentaccountId
+      - name: accountId
         in: path
-        description: ID of current account to return
+        description: ID of the Account to return related Prestito
         required: true
         schema:
           type: integer
@@ -45,83 +45,49 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/prestito'
             application/json:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/prestito'
         400:
           description: Invalid ID supplied
           content: {}
         404:
-          description: Current account not found
+          description: Prestito not found
           content: {}
       security:
       - api_key: []
-  /currentaccount/iban/{iban}:
+  /prestito:
     get:  
       tags:
-      - Current Account
-      summary: Find Current account by Iban
-      description: Returns a single Current Account
-      operationId: getByIban
-      parameters:
-      - name: iban
-        #type: string
-        in: path
-        description: ID of current account to return
-        required: true
-        schema:
-          type: string
-          #format: int64
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/currentAccount'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/currentAccount'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Current Account not found
-          content: {}
-      security:
-      - api_key: []
-  /currentaccount/:
-    get:  
-      tags:
-      - Current Accounts
-      summary: Find all the Current Accounts
-      description: Returns all the current Accounts
+      - Prestito
+      summary: Find all the prestiti
+      description: Returns all the prestiti
       operationId: getAll
-      #parameters:
       responses:
         200:
           description: successful operation
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/prestito'
             application/json:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/prestito'
         400:
           description: Invalid ID supplied
           content: {}
         404:
-          description: current acconunts not found
+          description: Prestito not found
           content: {}
       security:
-      - api_key: []        
+      - api_key: []
+  #/prestito          
     post:
       tags:
-      - current Accont
-      summary: Add a current account
-      operationId: addCurrentAccount
+      - Prestito
+      summary: Adds a Prestito
+      operationId: insert
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -129,38 +95,40 @@ paths:
               properties:
                 name:
                   #type: double
-                  description: added current account
+                  description: added Prestito
       responses:
         405:
           description: Invalid input
           content: {}
+        409:
+          description: Prestito gia presente nel DB  
       security:
       - admin_auth:
         - write:users
         - read:users
-      x-codegen-request-body-name: body            
-  #/currentaccount:
+      x-codegen-request-body-name: body       
+    #/prestito
     put:
       tags:
-      - currentAccount
-      summary: Update an existing current account
-      operationId: updateCurrentAccount
+      - Prestito
+      summary: Update an existing Prestito
+      operationId: update
       requestBody:
-        description: currentAccount object that needs to be updated
+        description: Prestito object that needs to be updated
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/currentAccount'
+              $ref: '#/components/schemas/prestito'
           application/xml:
             schema:
-              $ref: '#/components/schemas/currentAccount'
+              $ref: '#/components/schemas/prestito'
         required: true
       responses:
         400:
           description: Invalid parameters supplied
           content: {}
         404:
-          description: Current Account not found
+          description: Il Prestito non presente nel DB
           content: {}
         405:
           description: Validation exception
@@ -170,47 +138,62 @@ paths:
         - write:users
         - read:users
       x-codegen-request-body-name: body
-  #/currentaccount:
+    #/prestito    
     delete:
       tags:
-      - currentAccount
-      summary: Deletes a current account
-      operationId: deleteCurrentAccount
+      - Prestito
+      summary: Deletes a Prestito
+      operationId: delete
       responses:
         400:
           description: Invalid ID supplied
           content: {}
         404:
-          description: user not found
+          description:  Il Prestito non presente ne DB
           content: {}
       security:
       - admin_auth:
         - write:users
         - read:users
-
 components:
   schemas:
-    currentAccount:
+    prestito:
       required:
       - id
-      - iban
-      - balance
+      - import
+      - interest
       - account_id
+      - numero_rata
+      - importo_rata
+      - durata
+      - numero_rata_mancanti
+      - prestito_type
       type: object
       properties:
         id:
           type: integer
           format: int64
-        iban:
-          type: string
-        balance:
+        import:
           type: number
-          example: mitnik
+        interest:
+          type: number
         account_id:
           type: integer
           format: int64
+        numero_rata:
+          type: integer
+          format: int64
+        importo_rata:
+          type: number
+        durata:
+          type: string
+        numero_rata_mancanti:
+          type: integer
+          format: int64
+        prestito_type:
+          type: string        
       xml:
-        name: currentAccount
+        name: prestito
     ApiResponse:
       type: object
       properties:
@@ -228,8 +211,8 @@ components:
         implicit:
           authorizationUrl: http://admin.swagger.io/oauth/dialog
           scopes:
-            write:users: modify current Accounts in your account
-            read:users: read your current Accounts
+            write:users: modify Bank in your account
+            read:users: read your Bank
     api_key:
       type: apiKey
       name: api_key

@@ -18,23 +18,23 @@ servers:
 - url: https://admin.swagger.io/v2
 - url: http://admin.swagger.io/v2
 tags:
-- name: currentAccount
-  description: Everything about your current Account
+- name: Address
+  description: Everything about your Address
   externalDocs:
     description: Find out more
     url: http://swagger.io
 paths:
-  /currentaccount/id/{currentaccountId}:
+  /address/{addressId}:
     get:  
       tags:
-      - Current account
-      summary: Find Current Account by ID
-      description: Returns a single Current account
+      - Address
+      summary: Find Address by ID
+      description: Returns a single Address Entity
       operationId: getById
       parameters:
-      - name: currentaccountId
+      - name: addressId
         in: path
-        description: ID of current account to return
+        description: ID of the Address to return
         required: true
         schema:
           type: integer
@@ -45,10 +45,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/address'
             application/json:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/address'
         400:
           description: Invalid ID supplied
           content: {}
@@ -57,46 +57,12 @@ paths:
           content: {}
       security:
       - api_key: []
-  /currentaccount/iban/{iban}:
+  /currentaccount:
     get:  
       tags:
-      - Current Account
-      summary: Find Current account by Iban
-      description: Returns a single Current Account
-      operationId: getByIban
-      parameters:
-      - name: iban
-        #type: string
-        in: path
-        description: ID of current account to return
-        required: true
-        schema:
-          type: string
-          #format: int64
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/currentAccount'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/currentAccount'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Current Account not found
-          content: {}
-      security:
-      - api_key: []
-  /currentaccount/:
-    get:  
-      tags:
-      - Current Accounts
-      summary: Find all the Current Accounts
-      description: Returns all the current Accounts
+      - Address
+      summary: Find all the Address
+      description: Returns all the Addresses
       operationId: getAll
       #parameters:
       responses:
@@ -105,10 +71,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/address'
             application/json:
               schema:
-                $ref: '#/components/schemas/currentAccount'
+                $ref: '#/components/schemas/address'
         400:
           description: Invalid ID supplied
           content: {}
@@ -119,9 +85,9 @@ paths:
       - api_key: []        
     post:
       tags:
-      - current Accont
-      summary: Add a current account
-      operationId: addCurrentAccount
+      - Address
+      summary: Adds an address
+      operationId: addAddress
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -140,42 +106,11 @@ paths:
         - read:users
       x-codegen-request-body-name: body            
   #/currentaccount:
-    put:
-      tags:
-      - currentAccount
-      summary: Update an existing current account
-      operationId: updateCurrentAccount
-      requestBody:
-        description: currentAccount object that needs to be updated
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/currentAccount'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/currentAccount'
-        required: true
-      responses:
-        400:
-          description: Invalid parameters supplied
-          content: {}
-        404:
-          description: Current Account not found
-          content: {}
-        405:
-          description: Validation exception
-          content: {}
-      security:
-      - admin_auth:
-        - write:users
-        - read:users
-      x-codegen-request-body-name: body
-  #/currentaccount:
     delete:
       tags:
-      - currentAccount
-      summary: Deletes a current account
-      operationId: deleteCurrentAccount
+      - Address
+      summary: Deletes an Address
+      operationId: delete
       responses:
         400:
           description: Invalid ID supplied
@@ -190,27 +125,42 @@ paths:
 
 components:
   schemas:
-    currentAccount:
+    address:
       required:
       - id
-      - iban
-      - balance
-      - account_id
+      - via
+      - civico
+      - comune
+      - provincia
+      - regione
+      - stato
+      - cap 
+      - user_id
       type: object
       properties:
         id:
           type: integer
           format: int64
-        iban:
+        via:
           type: string
-        balance:
-          type: number
-          example: mitnik
-        account_id:
+        civico:
+          type: string
+        comune:
+          type: string
+        provincia:
+          type: string
+        regione:
+          type: string
+        stato:
+          type: string
+        cap:
           type: integer
           format: int64
+        user_id:
+          type: integer
+          format: int64          
       xml:
-        name: currentAccount
+        name: Address
     ApiResponse:
       type: object
       properties:
