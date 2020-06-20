@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import lefettebiscottate.homebanking.db.UserDao;
+import lefettebiscottate.homebanking.entity.AccountType;
 import lefettebiscottate.homebanking.entity.UserEntity;
 
 @Path("/user")
@@ -34,6 +35,13 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByEmail(@PathParam("email") String email) {
 		return Response.ok(userDao.getByEmail(email).toJson()).build();
+	}
+	
+	@GET
+	@Path("userType/{account_type}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByType(AccountType account_type) {
+		return Response.ok(userDao.getByType(account_type).toJson()).build();
 	}
 	
 	@GET

@@ -86,6 +86,43 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 
 		return u;
 	}
+	
+	
+	public UserEntity getByType(AccountType account_type) {
+
+		UserEntity u = null;
+
+		try {
+			String query = "SELECT * FROM user WHERE account_type = '" + account_type + "'";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				u = new UserEntity();
+				u.setName(rs.getString("name"));
+				u.setSurname(rs.getString("surname"));
+				u.setBirthdate(rs.getDate("birthdate").toLocalDate());
+				u.setEmail(rs.getString("email"));
+				u.setPassword(rs.getString("password"));
+				u.setPhonenumber(rs.getString("phone"));
+				u.setFiscal_code(rs.getString("codicefiscale"));
+				u.setGender(Gender.valueOf(rs.getString("gender")));
+				u.setAccount_type(AccountType.valueOf(rs.getString("account_type")));
+				u.setRegistrato(rs.getBoolean("registrato"));
+				u.setPartita_IVA(rs.getString("partitaIVA"));
+				u.setId(rs.getInt("id"));
+				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return u;
+	}
+	
 
 	public List<UserEntity> getAll() {
 
