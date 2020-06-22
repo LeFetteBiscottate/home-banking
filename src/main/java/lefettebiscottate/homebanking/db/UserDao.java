@@ -225,6 +225,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			pstmt.setInt(12, u.getBank().getId());
 
 			result = pstmt.execute();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
@@ -241,7 +242,8 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setBoolean(1, true);
 			stmt.setInt(2, u.getId());
-			result = true;
+			result = stmt.execute();
+			stmt.close();
 		} catch(SQLException e) {
 			e.printStackTrace();
 			result = false;
@@ -257,7 +259,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, u.getId());
-			result = true;
+			result = stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -277,7 +279,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			stmt.setString(2, u.getPassword());
 			stmt.setString(3, u.getPhonenumber());
 			stmt.setInt(4, u.getId());
-			result = true;
+			result = stmt.execute();
 			stmt.close();
 		} catch(SQLException e) {
 			e.printStackTrace();

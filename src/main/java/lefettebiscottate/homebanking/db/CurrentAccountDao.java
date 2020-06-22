@@ -52,7 +52,36 @@ public class CurrentAccountDao {
 		
 		try {
 			
-			String query = "SELECT * FROM currentaccount WHERE iban = "+ iban;
+			String query = "SELECT * FROM currentaccount WHERE iban = '"+ iban+"'";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while(rs.next()){
+				c = new CurrentAccountEntity();
+				c.setId(rs.getInt(1));
+				c.setIban(rs.getString(2));
+				c.setBalance(rs.getDouble(3));
+				c.setAccount(accountDao.getOne(rs.getInt(4)));
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return c;
+	}
+	
+	
+	public CurrentAccountEntity getByAccountId(int account_id) {
+		
+		CurrentAccountEntity c = null;
+		
+		try {
+			
+			String query = "SELECT * FROM currentaccount WHERE account_id = "+ account_id;
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			

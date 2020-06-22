@@ -14,6 +14,7 @@ public class CardEntity {
 	private String iban;
 	private String card_number;
 	private Circuit circuit;
+	private CardType type;
 	private double balance;
 	private LocalDate expiration_date;
 	private AccountEntity account;
@@ -22,13 +23,14 @@ public class CardEntity {
 	public CardEntity() {}
 	
 	public CardEntity(String iban, String card_number, Circuit circuit, double balance,
-			LocalDate expiration_date, AccountEntity account) {
+			LocalDate expiration_date, AccountEntity account, CardType type) {
 		this.iban = iban;
 		this.card_number = card_number;
 		this.circuit = circuit;
 		this.balance = balance;
 		this.expiration_date = expiration_date;
 		this.account = account;
+		this.type = type;
 	}
 	
 	public String toJson() {
@@ -153,6 +155,14 @@ public class CardEntity {
 	
 	public void setAccount(AccountEntity account) {
 		this.account = account;
+	}
+
+	public CardType getType() {
+		return type;
+	}
+
+	public void setType(CardType type) {
+		this.type = type;
 	}
 	
 	

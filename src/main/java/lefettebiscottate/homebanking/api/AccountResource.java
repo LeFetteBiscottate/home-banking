@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 import lefettebiscottate.homebanking.db.AccountDao;
 import lefettebiscottate.homebanking.entity.AccountEntity;
 
+@Path("/account")
 public class AccountResource {
 	
 	private AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
@@ -42,6 +44,14 @@ public class AccountResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addAccount(AccountEntity a) {
 		return Response.ok(accountDao.insert(a).toJson()).build();
+	}
+	
+	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteAccount(AccountEntity a) {
+		return Response.ok(accountDao.delete(a.getId())).build();
 	}
 
 }
