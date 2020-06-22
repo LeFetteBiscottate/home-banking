@@ -17,36 +17,36 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import lefettebiscottate.homebanking.db.CurrentAccountDao;
 import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
+import lefettebiscottate.homebanking.services.CurrentAccountService;
 
 @Path("/currentaccount")
 public class CurrentAccountResource {
 	
-	private CurrentAccountDao currentAccountDao = new CurrentAccountDao();
+	private CurrentAccountService currentAccountService = new CurrentAccountService();
 	
 	@GET
 	@Path("id/{currentaccountId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@PathParam("currentaccountId") int id) {
-		return Response.ok(currentAccountDao.getById(id).toJson()).build();
+		return Response.ok(currentAccountService.getById(id).toJson()).build();
 	}
 	
 	@GET
 	@Path("iban/{iban}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByIban(@PathParam("iban") String iban) {
-		return Response.ok(currentAccountDao.getByIban(iban).toJson()).build();
+		return Response.ok(currentAccountService.getByIban(iban).toJson()).build();
 	}
 	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		ArrayList<CurrentAccountEntity> list = (ArrayList<CurrentAccountEntity>) currentAccountDao.getAll();
+		ArrayList<CurrentAccountEntity> list = (ArrayList<CurrentAccountEntity>) currentAccountService.getAll();
 		Jsonb jsonb = JsonbBuilder.create();
 		System.out.println(jsonb.toJson(list));
-		return Response.ok(jsonb.toJson(currentAccountDao.getAll())).build();
+		return Response.ok(jsonb.toJson(currentAccountService.getAll())).build();
 	}
 	
 	
@@ -54,7 +54,7 @@ public class CurrentAccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCurrentAccount(CurrentAccountEntity c) {
-		return Response.ok(currentAccountDao.insert(c)).build();
+		return Response.ok(currentAccountService.insert(c)).build();
 	}
 	
 	
@@ -62,7 +62,7 @@ public class CurrentAccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCurrentAccount(CurrentAccountEntity c) {
-		return Response.ok(currentAccountDao.update(c)).build();
+		return Response.ok(currentAccountService.updateBalance(c)).build();
 	}
 	
 	@DELETE
@@ -72,7 +72,7 @@ public class CurrentAccountResource {
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCurrentAccount(CurrentAccountEntity c) {
-		return Response.ok(currentAccountDao.delete(c)).build();
+		return Response.ok(currentAccountService.delete(c)).build();
 	}
 
 }

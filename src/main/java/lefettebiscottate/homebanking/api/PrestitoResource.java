@@ -12,19 +12,19 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import lefettebiscottate.homebanking.db.PrestitoDao;
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
+import lefettebiscottate.homebanking.services.PrestitoService;
 
 @Path("/prestito")
 public class PrestitoResource {
 	
-	private PrestitoDao prestitoDao = new PrestitoDao();
+	private PrestitoService prestitoService = new PrestitoService();
 	
 	@GET
 	@Path("accountId/{accountId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByAccountId(@PathParam("accountId") int account_id) {
-		return Response.ok(prestitoDao.getByIdAccount(account_id).toJson()).build();
+		return Response.ok(prestitoService.getByIdAccount(account_id).toJson()).build();
 	}
 	
 	@GET
@@ -32,7 +32,7 @@ public class PrestitoResource {
 	public Response getAll() {
 		Jsonb jsonb = JsonbBuilder.create();
 		
-		return Response.ok(jsonb.toJson(prestitoDao.getAll())).build();
+		return Response.ok(jsonb.toJson(prestitoService.getAll())).build();
 	}
 	
 	
@@ -40,7 +40,7 @@ public class PrestitoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert(PrestitoEntity p) {
-		if(prestitoDao.insert(p))
+		if(prestitoService.insert(p))
 			return Response.ok(p.toJson()).build();
 		else
 			return Response.status(Response.Status.CONFLICT).entity("Prestito gi� presente nel DB").build();
@@ -51,7 +51,7 @@ public class PrestitoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(PrestitoEntity p) {
-		if(prestitoDao.update(p))
+		if(prestitoService.updateRateMancanti(p))
 			return Response.ok(p.toJson()).build();
 		else
 			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non � presente nel DB").build();
@@ -62,7 +62,7 @@ public class PrestitoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(PrestitoEntity p) {
-		if(prestitoDao.delete(p))
+		if(prestitoService.delete(p))
 			return Response.ok(p.toJson()).build();
 		else 
 			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non � presente nel DB").build();

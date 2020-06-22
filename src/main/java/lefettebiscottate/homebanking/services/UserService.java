@@ -1,9 +1,12 @@
 package lefettebiscottate.homebanking.services;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
+import lefettebiscottate.homebanking.db.AccountDao;
 import lefettebiscottate.homebanking.db.UserDao;
+import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.AccountType;
 import lefettebiscottate.homebanking.entity.UserEntity;
 
@@ -35,12 +38,16 @@ public class UserService {
 		return userDao.getUserNotRegistered();
 	}
 	
-	public boolean insert(UserEntity u) {
-		return userDao.insert(u);
-	}
+//	public boolean insert(UserEntity u) {
+//		return userDao.insert(u);
+//	}
 	
 	public boolean delete(UserEntity u) {
 		return userDao.delete(u);
+	}
+	
+	public boolean insert(UserEntity u) {
+		return userDao.insert(u);
 	}
 	
 	
@@ -57,7 +64,17 @@ public class UserService {
 	 * da parte dell'amministratore
 	 */
 	public boolean accettaUser(UserEntity u) {
-		return userDao.confermaRegistrazione(u);
+		boolean confermato = false;
+		AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
+		if(userDao.confermaRegistrazione(u)) {
+			u = userDao.getByEmail(u.getEmail());
+			AccountEntity accountEntity = new AccountEntity();
+			accountEntity.setUser(u.getId());
+			accountEntity.setCreation_date(LocalDate.now().toString());
+			accountDao.insert(accountEntity);
+			confermato = true;
+		}
+		return confermato;
 	}
 	
 	
@@ -70,9 +87,16 @@ public class UserService {
 		
 		List<UserEntity> utenti = userDao.getUserNotRegistered();
 		Iterator<UserEntity> i = utenti.iterator();
+		AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
 		
 		while(i.hasNext()) {
 			userDao.confermaRegistrazione(i.next());
+			UserEntity u = i.next();
+			u = userDao.getByEmail(u.getEmail());
+			AccountEntity accountEntity = new AccountEntity();
+			accountEntity.setUser(u.getId());
+			accountEntity.setCreation_date(LocalDate.now().toString());
+			accountDao.insert(accountEntity);
 		}
 	}
 

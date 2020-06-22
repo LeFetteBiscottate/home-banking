@@ -12,20 +12,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import lefettebiscottate.homebanking.db.BankDao;
 import lefettebiscottate.homebanking.entity.BankEntity;
+import lefettebiscottate.homebanking.services.BankService;
 
 
 @Path("/bank")
 public class BankResource {
 	
-	private BankDao<BankEntity, Integer> bankDao = new BankDao<>();
+	private BankService bankService = new BankService();
 	
 	@GET
 	@Path("{bankId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@PathParam("bankId") int id) {
-		return Response.ok(bankDao.getOne(id).toJson()).build();
+		return Response.ok(bankService.getById(id).toJson()).build();
 	}
 	
 	
@@ -33,7 +33,7 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
 		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(bankDao.getAll())).build();
+		return Response.ok(jsonb.toJson(bankService.getAll())).build();
 	}
 	
 	
@@ -41,7 +41,7 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addBank(BankEntity b) {
-		return Response.ok(bankDao.insert(b).toJson()).build();
+		return Response.ok(bankService.insert(b).toJson()).build();
 	}
 	
 	
@@ -49,6 +49,6 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response delete(BankEntity b) {
-		return Response.ok(bankDao.delete(b.getId())).build();
+		return Response.ok(bankService.delete(b)).build();
 	}
 }

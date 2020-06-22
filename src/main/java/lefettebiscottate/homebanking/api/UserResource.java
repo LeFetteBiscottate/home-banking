@@ -12,20 +12,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import lefettebiscottate.homebanking.db.UserDao;
 import lefettebiscottate.homebanking.entity.AccountType;
 import lefettebiscottate.homebanking.entity.UserEntity;
+import lefettebiscottate.homebanking.services.UserService;
 
 @Path("/user")
 public class UserResource {
 	
-	private UserDao userDao = new UserDao();
+	private UserService userService = new UserService();
 	
 	@GET
 	@Path("userId/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@PathParam("userId") int id) {
-		return Response.ok(userDao.getById(id).toJson()).build();
+		return Response.ok(userService.getById(id).toJson()).build();
 	}
 	
 	
@@ -33,14 +33,14 @@ public class UserResource {
 	@Path("userEmail/{email}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByEmail(@PathParam("email") String email) {
-		return Response.ok(userDao.getByEmail(email).toJson()).build();
+		return Response.ok(userService.getByEmail(email).toJson()).build();
 	}
 	
 	@GET
 	@Path("userType/{account_type}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByType(AccountType account_type) {
-		return Response.ok(userDao.getByType(account_type).toJson()).build();
+		return Response.ok(userService.getByType(account_type).toJson()).build();
 	}
 	
 //	@GET
@@ -54,7 +54,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
 		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(userDao.getAll())).build();
+		return Response.ok(jsonb.toJson(userService.getAll())).build();
 	}
 	
 	@GET
@@ -62,14 +62,14 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUsersNotRegistered() {
 		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(userDao.getUserNotRegistered())).build();
+		return Response.ok(jsonb.toJson(userService.getUserNotRegistered())).build();
 	}
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(UserEntity u) {
-		if(userDao.insert(u))
+		if(userService.insert(u))
 			return Response.ok(u.toJson()).build();
 		else
 			return Response.status(Response.Status.CONFLICT).entity("Utente gi� presente nel DB").build();
@@ -80,7 +80,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(UserEntity u) {
-		if(userDao.update(u))
+		if(userService.update(u))
 			return Response.ok(u.toJson()).build();
 		else
 			return Response.status(Response.Status.CONFLICT).entity("Utente non presente nel DB").build();
@@ -92,7 +92,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response confermaUser(UserEntity u) {
-		if(userDao.confermaRegistrazione(u))
+		if(userService.accettaUser(u))
 			return Response.ok(u.toJson()).build();
 		else
 			return Response.status(Response.Status.CONFLICT).build();
@@ -103,7 +103,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response delete(UserEntity u) {
-		if(userDao.insert(u))
+		if(userService.insert(u))
 			return Response.ok(u.toJson()).build();
 		else
 			return Response.status(Response.Status.CONFLICT).entity("Utente non presente nel DB").build();

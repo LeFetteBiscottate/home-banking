@@ -12,29 +12,29 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import lefettebiscottate.homebanking.db.AccountDao;
 import lefettebiscottate.homebanking.entity.AccountEntity;
+import lefettebiscottate.homebanking.services.AccountService;
 
 @Path("/account")
 public class AccountResource {
 	
-	private AccountDao<AccountEntity, Integer> accountDao = new AccountDao<>();
+	private AccountService accountService = new AccountService();
 	
 	@GET
 	@Path("{accountId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(int id) {
-		return Response.ok(accountDao.getOne(id).toJson()).build();
+		return Response.ok(accountService.getById(id).toJson()).build();
 	}
 	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		ArrayList<AccountEntity> list = (ArrayList<AccountEntity>) accountDao.getAll();
+		ArrayList<AccountEntity> list = (ArrayList<AccountEntity>) accountService.getAll();
 		Jsonb jsonb = JsonbBuilder.create();
 		System.out.println(jsonb.toJson(list));
-		return Response.ok(jsonb.toJson(accountDao.getAll())).build();
+		return Response.ok(jsonb.toJson(accountService.getAll())).build();
 	}
 	
 	
@@ -42,7 +42,7 @@ public class AccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addAccount(AccountEntity a) {
-		return Response.ok(accountDao.insert(a).toJson()).build();
+		return Response.ok(accountService.insert(a).toJson()).build();
 	}
 	
 	
@@ -50,7 +50,7 @@ public class AccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteAccount(AccountEntity a) {
-		return Response.ok(accountDao.delete(a.getId())).build();
+		return Response.ok(accountService.delete(a)).build();
 	}
 
 }

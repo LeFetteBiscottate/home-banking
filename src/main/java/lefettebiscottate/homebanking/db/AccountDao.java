@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AccountEntity;
@@ -22,7 +19,7 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 		ResultSet rs = null;
 		try {
 			account = new AccountEntity();
-			String query = "SELECT * FROM account WHER id =" + primaryKey;
+			String query = "SELECT * FROM account WHERE id =" + primaryKey;
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -111,7 +108,7 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 		PreparedStatement stmt = null;
 		try {
 
-			String query = "INSERT * INTO account (date_of_creation , user_id)VALUES(?,?)";// will be modified
+			String query = "INSERT * INTO account(date_of_creation , user_id) VALUES(?,?)";// will be modified
 			stmt = con.prepareStatement(query);
 			stmt.setString(1, (acc.getCreation_date()));// (arg0, arg1, arg2);(1,(acc.getCreation_date()));//
 														// LocalDate() should be converted to Date()
