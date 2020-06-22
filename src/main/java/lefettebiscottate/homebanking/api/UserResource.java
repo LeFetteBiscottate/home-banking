@@ -44,6 +44,13 @@ public class UserResource {
 		return Response.ok(userDao.getByType(account_type).toJson()).build();
 	}
 	
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response getAll() {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(userDao.getAll())).build();
+//	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
@@ -66,7 +73,7 @@ public class UserResource {
 		if(userDao.insert(u))
 			return Response.ok(u.toJson()).build();
 		else
-			return Response.status(Response.Status.CONFLICT).entity("Utente già presente nel DB").build();
+			return Response.status(Response.Status.CONFLICT).entity("Utente giï¿½ presente nel DB").build();
 	}
 	
 	
