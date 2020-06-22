@@ -1,5 +1,4 @@
 package lefettebiscottate.homebanking.api;
-
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
