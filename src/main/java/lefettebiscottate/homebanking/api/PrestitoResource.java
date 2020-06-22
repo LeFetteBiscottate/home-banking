@@ -12,7 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import lefettebiscottate.homebanking.db.PrestitoDao;
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
 
@@ -44,7 +43,7 @@ public class PrestitoResource {
 		if(prestitoDao.insert(p))
 			return Response.ok(p.toJson()).build();
 		else
-			return Response.status(Response.Status.CONFLICT).entity("Prestito già presente nel DB").build();
+			return Response.status(Response.Status.CONFLICT).entity("Prestito giï¿½ presente nel DB").build();
 	}
 	
 	
@@ -55,7 +54,7 @@ public class PrestitoResource {
 		if(prestitoDao.update(p))
 			return Response.ok(p.toJson()).build();
 		else
-			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non è presente nel DB").build();
+			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non ï¿½ presente nel DB").build();
 	}
 	
 	
@@ -66,6 +65,6 @@ public class PrestitoResource {
 		if(prestitoDao.delete(p))
 			return Response.ok(p.toJson()).build();
 		else 
-			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non è presente nel DB").build();
+			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non ï¿½ presente nel DB").build();
 	}
 }
