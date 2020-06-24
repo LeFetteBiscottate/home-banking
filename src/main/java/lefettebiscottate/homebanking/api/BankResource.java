@@ -16,6 +16,8 @@ import lefettebiscottate.homebanking.entity.BankEntity;
 import lefettebiscottate.homebanking.services.BankService;
 
 
+
+
 @Path("/bank")
 public class BankResource {
 	
@@ -48,7 +50,8 @@ public class BankResource {
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response delete(BankEntity b) {
-		return Response.ok(bankService.delete(b)).build();
+	@Path("{bankId}")
+	public Response delete(@PathParam("bankId") int id) {
+		return Response.ok(bankService.delete(id)).build();
 	}
 }

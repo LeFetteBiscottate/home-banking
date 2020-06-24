@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AddressEntity;
-//import lefettebiscottate.homebanking.entity.BankEntity;
 
 public class AddressDao<E, K> {// implements Dao<E,K> {
 	private static Connection con = DBConnection.getConnection();

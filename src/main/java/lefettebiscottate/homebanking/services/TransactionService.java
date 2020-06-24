@@ -10,6 +10,8 @@ import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 import lefettebiscottate.homebanking.entity.TransactionEntity;
 import lefettebiscottate.homebanking.entity.TransactionType;
 
+
+
 public class TransactionService {
 	
 	private TransactionDao transactionDao;
@@ -46,8 +48,8 @@ public class TransactionService {
 		return transactionDao.update(t);
 	}
 	
-	public boolean delete(TransactionEntity t) {
-		return transactionDao.delete(t);
+	public boolean delete(int id) {
+		return transactionDao.delete(id);
 	}
 	
 	public boolean eseguiOpOrigine(TransactionEntity t) {

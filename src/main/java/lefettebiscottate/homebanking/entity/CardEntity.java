@@ -84,7 +84,7 @@ public class CardEntity {
 	
 	@Override
 	public String toString() {
-		return "Numero Carta: "+this.card_number+"\nSaldo"+this.balance+"€\nCircuito: "+this.circuit
+		return "Numero Carta: "+this.card_number+"\nSaldo"+this.balance+"ï¿½\nCircuito: "+this.circuit
 				+"\nScadenza: "+this.expiration_date+"\n";
 	}
 	

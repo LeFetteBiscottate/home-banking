@@ -9,9 +9,11 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.services.AccountService;
 
@@ -23,7 +25,7 @@ public class AccountResource {
 	@GET
 	@Path("{accountId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getById(int id) {
+	public Response getById(@PathParam("accountId")int id) {
 		return Response.ok(accountService.getById(id).toJson()).build();
 	}
 	
@@ -49,8 +51,9 @@ public class AccountResource {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteAccount(AccountEntity a) {
-		return Response.ok(accountService.delete(a)).build();
+	@Path("{accountId}")
+	public Response deleteAccount(@PathParam("accountId")int id) {
+		return Response.ok(accountService.delete(id)).build();
 	}
 
 }

@@ -18,6 +18,7 @@ import lefettebiscottate.homebanking.entity.AddressEntity;
 import lefettebiscottate.homebanking.services.AddressService;
 
 
+
 @Path("/address")
 public class AddressResource {
 	
@@ -53,7 +54,8 @@ public class AddressResource {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(AddressEntity a) {
-		return Response.ok(addressService.delete(a)).build();
+	@Path("{addressId}")
+	public Response delete(@PathParam("addressId")int id) {
+		return Response.ok(addressService.delete(id)).build();
 	}
 }

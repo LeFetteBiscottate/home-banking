@@ -5,6 +5,8 @@ import java.util.List;
 import lefettebiscottate.homebanking.db.BankDao;
 import lefettebiscottate.homebanking.entity.BankEntity;
 
+
+
 public class BankService {
 	
 	private BankDao<BankEntity, Integer> bankDao;
@@ -25,7 +27,7 @@ public class BankService {
 		return bankDao.insert(b);
 	}
 	
-	public int delete(BankEntity b) {
-		return bankDao.delete(b.getId());
+	public int delete(int id) {
+		return bankDao.delete(id);
 	}
 }

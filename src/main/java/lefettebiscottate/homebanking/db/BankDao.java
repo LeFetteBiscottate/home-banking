@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lefettebiscottate.homebanking.entity.BankEntity;
+
+
 //import java.util.concurrent.Future;
 
 public class BankDao<E, K> { // implements Dao<E , K >{

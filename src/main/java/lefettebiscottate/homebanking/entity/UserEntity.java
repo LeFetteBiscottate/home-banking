@@ -6,10 +6,9 @@ import java.time.LocalDate;
 
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
-import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.config.PropertyVisibilityStrategy;
 
-import lefettebiscottate.homebanking.utils.Validation;
+
 
 public class UserEntity {
 
@@ -62,8 +61,7 @@ public class UserEntity {
 		this.isRegistrato = isRegistrato;
 		this.bank = bank;
 	}
-	
-	
+
 	public String toJson() {
 		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
 
@@ -76,12 +74,10 @@ public class UserEntity {
 			public boolean isVisible(Method arg0) {
 				return true;
 			}
-			
+
 		});
-		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this); //JsonbBuilder.class.newInstance().withConfig(config).to
+		return JsonbBuilder.newBuilder().withConfig(config).build().toJson(this); // JsonbBuilder.class.newInstance().withConfig(config).to
 	}
-	
-	
 
 	// Getter
 	public String getName() {
@@ -178,7 +174,7 @@ public class UserEntity {
 		return "UserEntity [name=" + name + ", surname=" + surname + ", email=" + email + ", birthdate=" + birthdate
 				+ ", password=" + password + ", phonenumber=" + phonenumber + ", fiscal_code=" + fiscal_code
 				+ ", gender=" + gender + ", account_type=" + account_type + ", partita_IVA=" + partita_IVA + "Bank = "
-				+this.bank+"]";
+				+ this.bank + "]";
 	}
 
 	@Override
@@ -236,7 +232,5 @@ public class UserEntity {
 	public void setBank(BankEntity bank) {
 		this.bank = bank;
 	}
-	
-	
 
 }

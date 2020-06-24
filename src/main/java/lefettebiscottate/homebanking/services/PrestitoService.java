@@ -7,6 +7,8 @@ import lefettebiscottate.homebanking.db.PrestitoDao;
 import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
 
+
+
 public class PrestitoService {
 	
 	private PrestitoDao prestitoDao;
@@ -27,8 +29,8 @@ public class PrestitoService {
 		return prestitoDao.insert(p);
 	}
 	
-	public boolean delete(PrestitoEntity p) {
-		return prestitoDao.delete(p);
+	public boolean delete(int id) {
+		return prestitoDao.delete(id);
 	}
 	
 	public boolean updateRateMancanti(PrestitoEntity p) {
@@ -50,7 +52,7 @@ public class PrestitoService {
 				System.out.println("Saldo insufficiente!");
 			}
 		} else {
-			System.out.println("Non ci sono più rate da pagare!");
+			System.out.println("Non ci sono piï¿½ rate da pagare!");
 		}
 	}
 }

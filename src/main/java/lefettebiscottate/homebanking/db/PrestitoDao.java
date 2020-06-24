@@ -12,6 +12,7 @@ import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
 import lefettebiscottate.homebanking.entity.TipoPrestito;
 
+
 public class PrestitoDao {
 	
 	private static Connection con = DBConnection.getConnection();
@@ -127,13 +128,13 @@ public class PrestitoDao {
 		return result;
 	}
 	
-	public boolean delete(PrestitoEntity p) {
+	public boolean delete(int id) {
 		boolean result = false;
 		String query = "DELETE FROM prestito WHERE id = ?";
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, p.getId());
+			stmt.setInt(1, id);
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {

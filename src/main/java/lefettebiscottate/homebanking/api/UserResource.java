@@ -37,11 +37,18 @@ public class UserResource {
 	}
 	
 	@GET
-	@Path("userType/{account_type}")
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByType(AccountType account_type) {
-		return Response.ok(userService.getByType(account_type).toJson()).build();
+	public Response getByEmail(@PathParam("id") int id) {
+		return Response.ok(userService.getById(id).toJson()).build();
 	}
+	
+//	@GET
+//	@Path("userType/{account_type}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response getByType(@PathParam("account_type") AccountType account_type) {
+//		return Response.ok(userService.getByType(account_type).toJson()).build();
+//	}
 	
 //	@GET
 //	@Produces(MediaType.APPLICATION_JSON)
@@ -57,13 +64,13 @@ public class UserResource {
 		return Response.ok(jsonb.toJson(userService.getAll())).build();
 	}
 	
-	@GET
-	@Path("/notRegistered")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUsersNotRegistered() {
-		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(userService.getUserNotRegistered())).build();
-	}
+//	@GET
+//	@Path("/notRegistered")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response getUsersNotRegistered() {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(userService.getUserNotRegistered())).build();
+//	}
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -87,24 +94,25 @@ public class UserResource {
 	}
 	
 	
-	@PUT
-	@Path("confirmation/{userId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response confermaUser(UserEntity u) {
-		if(userService.accettaUser(u))
-			return Response.ok(u.toJson()).build();
-		else
-			return Response.status(Response.Status.CONFLICT).build();
-	}
+//	@PUT
+//	@Path("confirmation/{userId}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public Response confermaUser(UserEntity u) {
+//		if(userService.accettaUser(u))
+//			return Response.ok(u.toJson()).build();
+//		else
+//			return Response.status(Response.Status.CONFLICT).build();
+//	}
 	
 	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response delete(UserEntity u) {
-		if(userService.insert(u))
-			return Response.ok(u.toJson()).build();
+	@Path("{id}")
+	public Response delete(@PathParam("id")int id) {
+		if(userService.delete(id))
+			return Response.ok().build();
 		else
 			return Response.status(Response.Status.CONFLICT).entity("Utente non presente nel DB").build();
 	}

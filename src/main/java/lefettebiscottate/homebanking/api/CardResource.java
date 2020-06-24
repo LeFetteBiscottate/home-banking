@@ -17,6 +17,7 @@ import lefettebiscottate.homebanking.entity.CardEntity;
 import lefettebiscottate.homebanking.entity.CardType;
 import lefettebiscottate.homebanking.services.CardService;
 
+
 @Path("/card")
 public class CardResource {
 
@@ -29,35 +30,35 @@ public class CardResource {
 		return Response.ok(card.getById(cardId).toJson()).build();
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{card_number}")
-	public Response getByCardNumber(@PathParam("card_number") String cardNumber) {
-		return Response.ok(card.getByNumber(cardNumber).toJson()).build();
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("{card_number}")
+//	public Response getByCardNumber(@PathParam("card_number") String cardNumber) {
+//		return Response.ok(card.getByNumber(cardNumber).toJson()).build();
+//	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{card_type}")
-	public Response getByCardType(@PathParam("card_type") CardType cardType) {
-		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(card.getByType(cardType))).build();
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("{card_type}")
+//	public Response getByCardType(@PathParam("card_type") CardType cardType) {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(card.getByType(cardType))).build();
+//	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{accountId}")
-	public Response getByAccountId(@PathParam("accountId") int accountId) {
-		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(card.getByAccountId(accountId))).build();
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("{accountId}")
+//	public Response getByAccountId(@PathParam("accountId") int accountId) {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(card.getByAccountId(accountId))).build();
+//	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{accountId}/{cardType}")
-	public Response getByAccountIdAndType(@PathParam("cardType") CardType type, @PathParam("accountId") int accountId) {
-		return Response.ok(card.getByAccountAndType(type, accountId).toJson()).build();
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("{accountId}/{cardType}")
+//	public Response getByAccountIdAndType(@PathParam("cardType") String type, @PathParam("accountId") int accountId) {
+//		return Response.ok(card.getByAccountAndType(type, accountId).toJson()).build();
+//	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -87,9 +88,10 @@ public class CardResource {
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response delete(CardEntity c) {
-		if (card.delete(c))
-			return Response.ok(c.toJson()).build();
+	@Path("{cardId}")
+	public Response delete(@PathParam("cardId")int id) {
+		if (card.delete(id))
+			return Response.ok().build();
 		return Response.status(Response.Status.NOT_FOUND).entity("Il card non e presente ne DB").build();
 	}
 

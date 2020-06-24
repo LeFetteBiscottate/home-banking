@@ -6,6 +6,8 @@ import lefettebiscottate.homebanking.db.CardDao;
 import lefettebiscottate.homebanking.entity.CardEntity;
 import lefettebiscottate.homebanking.entity.CardType;
 
+
+
 public class CardService {
 	
 	private CardDao cardDao;
@@ -22,8 +24,8 @@ public class CardService {
 		return cardDao.getByAccountId(account_id);
 	}
 	
-	public CardEntity getByAccountAndType(CardType type, int account_id) {
-		return cardDao.getByAccountIdAndType(type, account_id);
+	public CardEntity getByAccountAndType(String cardType, int account_id) {
+		return cardDao.getByAccountIdAndType(cardType, account_id);
 	}
 	
 	public CardEntity getByNumber(String card_number) {
@@ -46,7 +48,7 @@ public class CardService {
 		return cardDao.insert(c);
 	}
 	
-	public boolean delete(CardEntity c) {
-		return cardDao.delete(c);
+	public boolean delete(int id) {
+		return cardDao.delete(id);
 	}
 }

@@ -13,6 +13,8 @@ import lefettebiscottate.homebanking.entity.CardEntity;
 import lefettebiscottate.homebanking.entity.CardType;
 import lefettebiscottate.homebanking.entity.Circuit;
 
+
+
 public class CardDao {
 	
 	private static Connection con = DBConnection.getConnection();
@@ -141,12 +143,12 @@ public class CardDao {
 	}
 	
 	
-	public CardEntity getByAccountIdAndType(CardType type, int account_id) {
+	public CardEntity getByAccountIdAndType(String cardType, int account_id) {
 		
 		CardEntity c = null;
 		
 		try {
-			String query = "SELECT * FROM card WHERE type = '"+type+ "' and account_id = "+account_id;
+			String query = "SELECT * FROM card WHERE type = '"+cardType+ "' and account_id = "+account_id;
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -230,13 +232,13 @@ public class CardDao {
 		return result;
 	}
 	
-	public boolean delete(CardEntity c) {
+	public boolean delete(int id) {
 		boolean result = false;
 		String query = "DELETE FROM card WHERE id = ?";
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, c.getId());
+			stmt.setInt(1, id);
 			result = stmt.execute();
 			stmt.close();
 		} catch(SQLException e) {

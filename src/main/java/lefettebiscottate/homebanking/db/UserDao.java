@@ -13,6 +13,8 @@ import lefettebiscottate.homebanking.entity.BankEntity;
 import lefettebiscottate.homebanking.entity.Gender;
 import lefettebiscottate.homebanking.entity.UserEntity;
 
+
+
 public class UserDao {// implements Dao<UserEntity, Integer> {
 
 	private static Connection con = DBConnection.getConnection();
@@ -252,13 +254,13 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 	}
 	
 
-	public boolean delete(UserEntity u) {
+	public boolean delete(int id) {
 		boolean result = false;
 		String query = "DELETE FROM user WHERE id = ?";
 
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, u.getId());
+			stmt.setInt(1, id);
 			result = stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {

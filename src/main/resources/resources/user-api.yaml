@@ -1,0 +1,362 @@
+openapi: 3.0.1
+info:
+  title: Swagger Home-Banking
+  description: 'This is Home-Banking server.'
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: https://admin.swagger.io/v2
+- url: http://admin.swagger.io/v2
+tags:
+- name: User
+  description: Everything about your Users
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+paths:
+  /user/userId/{userId}:
+    get:  
+      tags:
+      - User
+      summary: Find a User by ID
+      description: Returns a single User
+      operationId: getById
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/user'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+      security:
+      - api_key: []
+  /user/userEmail/{email}:
+    get:  
+      tags:
+      - User
+      summary: Find User by Email
+      description: Returns a single User since email is Unique Key
+      operationId: getByEmail
+      parameters:
+      - name: email
+        in: path
+        description: Email of the User to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/user'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          description: Invalid Email supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+      security:
+      - api_key: []
+  /user/userType/{account_type}:
+    get:  
+      tags:
+      - User
+      summary: Find a User by AccountType
+      description: Returns a list user with given account_type 
+      operationId: getByType
+      parameters:
+      - name: account_type
+        in: path
+        description: account_type of the users to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/user'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          description: Invalid Account_type supplied
+          content: {}
+        404:
+          description: Users not found
+          content: {}
+      security:
+      - api_key: []
+  /user/notRegistered:
+    get:  
+      tags:
+      - User
+      summary: Find Users with status not Registered
+      description: Returns a list of unregistered users 
+      operationId: getUsersNotRegistered
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/user'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Users not found
+          content: {}
+      security:
+      - api_key: []
+  /user/confirmation/{userId}:
+    put:
+      tags:
+      - User
+      summary: Changes status of Unregistered user to Registered user
+      operationId: confermaUser
+      parameters:
+      - name: userId
+        in: path
+        description: Id of the users to be Confirmed
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: User object that needs to be registered
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        400:
+          description: Invalid parameters supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+        409:
+          description: Conflict Error
+          content: {}  
+      security:
+      - admin_auth:
+        - write:users
+        - read:users
+      x-codegen-request-body-name: body    
+  /user:
+    get:  
+      tags:
+      - User
+      summary: Find all the Users
+      description: Returns all the Users
+      operationId: getAll
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/user'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Users not found
+          content: {}
+      security:
+      - api_key: []
+    #/user  
+    post:
+      tags:
+      - User
+      summary: Insert a User
+      operationId: insert
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                name:
+                  description: added User
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+        409:
+          description: Utente gia presente ne DB
+          content: {}
+      security:
+      - admin_auth:
+        - write:users
+        - read:users
+      x-codegen-request-body-name: body            
+  #/user:
+    put:
+      tags:
+      - User
+      summary: Update an existing User
+      operationId: update
+      requestBody:
+        description: User object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        400:
+          description: Invalid parameters supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+        409:
+          description: Utente non presente ne DB
+          content: {}  
+      security:
+      - admin_auth:
+        - write:users
+        - read:users
+      x-codegen-request-body-name: body
+  #/user:
+    delete:
+      tags:
+      - User
+      summary: Deletes a User
+      operationId: delete
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: user not found
+          content: {}
+        409:
+          description: Utente non presente nel DB
+          content: {}  
+      security:
+      - admin_auth:
+        - write:users
+        - read:users
+components:
+  schemas:
+    user:
+      required:
+      - id
+      - name
+      - surname
+      - birthdate
+      - email
+      - password
+      - phone
+      - gender
+      - account_type
+      - registrato
+      - bank_id
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        surname:
+          type: string
+        birthdate:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        codicefiscale:
+          type: string
+        gender:
+          type: string
+        account_type:
+          type: string
+        registrato:
+          type: boolean
+        partitaIVA:
+          type: string
+        bank-id:
+          type: integer
+          format: int64
+      xml:
+        name: user
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    admin_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://admin.swagger.io/oauth/dialog
+          scopes:
+            write:users: modify transaction
+            read:users: read your transaction
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

@@ -74,7 +74,7 @@ public class CurrentAccountEntity {
 	
 	@Override
 	public String toString() {
-		return "Codice Iban: "+this.iban+"\nSaldo: "+this.balance+" €\n";
+		return "Codice Iban: "+this.iban+"\nSaldo: "+this.balance+" ï¿½\n";
 	}
 
 	public int getId() {

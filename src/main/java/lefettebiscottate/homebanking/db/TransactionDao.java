@@ -1,15 +1,16 @@
 package lefettebiscottate.homebanking.db;
 
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.TransactionEntity;
+
 
 public class TransactionDao {
 	
@@ -204,13 +205,13 @@ public class TransactionDao {
 	}
 	
 	
-	public boolean delete(TransactionEntity t) {
+	public boolean delete(int id) {
 		boolean result = false;
 		String query = "DELETE FROM transaction WHERE id = ?";
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, t.getId());
+			stmt.setInt(1, id);
 			result = true;
 			stmt.close();
 		}catch(SQLException e) {

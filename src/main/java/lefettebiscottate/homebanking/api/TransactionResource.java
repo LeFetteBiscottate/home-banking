@@ -37,32 +37,32 @@ public class TransactionResource {
 	}
 	
 	
-	@GET
-	@Path("{start}/{end}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByPeriod(@PathParam("start") String start, @PathParam("end") String end) {
-		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(transactionDao.getByPeriod(start, end))).build();
-	}
+//	@GET
+//	@Path("{start}/{end}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response getByPeriod(@PathParam("start") String start, @PathParam("end") String end) {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(transactionDao.getByPeriod(start, end))).build();
+//	}
 	
 	
-	@GET
-	@Path("{accountId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllByAccountId(@PathParam("accountId") int account_id) {
-		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(transactionDao.getAllByAccountId(account_id))).build();
-	}
+//	@GET
+//	@Path("{accountId}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response getAllByAccountId(@PathParam("accountId") int account_id) {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(transactionDao.getAllByAccountId(account_id))).build();
+//	}
+//	
 	
-	
-	@GET
-	@Path("{accountId}/{start}/{end}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByPeriodAndAccountId(@PathParam("accountId") int account_id, @PathParam("start") String start,
-											@PathParam("end") String end) {
-		Jsonb jsonb = JsonbBuilder.create();
-		return Response.ok(jsonb.toJson(transactionDao.getByPeriodAndAccountId(start, end, account_id))).build();
-	}
+//	@GET
+//	@Path("{accountId}/{start}/{end}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response getByPeriodAndAccountId(@PathParam("accountId") int account_id, @PathParam("start") String start,
+//											@PathParam("end") String end) {
+//		Jsonb jsonb = JsonbBuilder.create();
+//		return Response.ok(jsonb.toJson(transactionDao.getByPeriodAndAccountId(start, end, account_id))).build();
+//	}
 	
 	
 	@POST
@@ -72,7 +72,7 @@ public class TransactionResource {
 		if(transactionDao.insert(t))
 			return Response.ok(t.toJson()).build();
 		else
-			return Response.status(Response.Status.CONFLICT).entity("Transazione già presente nel DB").build();
+			return Response.status(Response.Status.CONFLICT).entity("Transazione giï¿½ presente nel DB").build();
 	}
 	
 	
@@ -90,11 +90,12 @@ public class TransactionResource {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(TransactionEntity t) {
-		if(transactionDao.delete(t))
-			return Response.ok(t.toJson()).build();
+	@Path("{id}")
+	public Response delete(@PathParam("id")int id) {
+		if(transactionDao.delete(id))
+			return Response.ok().build();
 		else
-			return Response.status(Response.Status.CONFLICT).entity("Transazione già presente nel DB").build();
+			return Response.status(Response.Status.CONFLICT).entity("Transazione giï¿½ presente nel DB").build();
 	}
 	
 	

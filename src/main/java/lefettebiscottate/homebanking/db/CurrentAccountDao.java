@@ -11,6 +11,7 @@ import java.util.List;
 import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.CurrentAccountEntity;
 
+
 public class CurrentAccountDao {
 	
 	private static Connection con = DBConnection.getConnection();
@@ -176,7 +177,7 @@ public class CurrentAccountDao {
 		return result;
 	}
 	
-	public boolean delete(CurrentAccountEntity c) {
+	public boolean delete(int id) {
 		
 		String query = "DELETE FROM currentaccount WHERE id = ?";
 		
@@ -184,7 +185,7 @@ public class CurrentAccountDao {
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, c.getId());
+			stmt.setInt(1, id);
 			result = true;
 			stmt.close();
 		} catch (SQLException e) {

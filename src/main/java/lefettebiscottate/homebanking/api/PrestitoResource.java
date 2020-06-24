@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import lefettebiscottate.homebanking.entity.PrestitoEntity;
 import lefettebiscottate.homebanking.services.PrestitoService;
 
@@ -61,9 +62,10 @@ public class PrestitoResource {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(PrestitoEntity p) {
-		if(prestitoService.delete(p))
-			return Response.ok(p.toJson()).build();
+	@Path("{id}")
+	public Response delete(@PathParam("id") int id) {
+		if(prestitoService.delete(id))
+			return Response.ok().build();
 		else 
 			return Response.status(Response.Status.NOT_FOUND).entity("Il prestito non � presente nel DB").build();
 	}

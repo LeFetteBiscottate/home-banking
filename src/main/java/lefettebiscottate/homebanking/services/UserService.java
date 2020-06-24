@@ -9,9 +9,13 @@ import lefettebiscottate.homebanking.db.UserDao;
 import lefettebiscottate.homebanking.entity.AccountEntity;
 import lefettebiscottate.homebanking.entity.AccountType;
 import lefettebiscottate.homebanking.entity.UserEntity;
+import lefettebiscottate.homebanking.utils.UserValidation;
+
+
 
 public class UserService {
 	
+	private UserValidation v = new UserValidation();
 	private UserDao userDao;
 	
 	public UserService() {
@@ -42,12 +46,16 @@ public class UserService {
 //		return userDao.insert(u);
 //	}
 	
-	public boolean delete(UserEntity u) {
-		return userDao.delete(u);
+	public boolean delete(int id) {
+		return userDao.delete(id);
 	}
 	
 	public boolean insert(UserEntity u) {
-		return userDao.insert(u);
+		if(v.validateUser(u)) {
+			return userDao.insert(u);
+		}
+		//return userDao.insert(u);
+		return false;
 	}
 	
 	
