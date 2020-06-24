@@ -28,7 +28,7 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				String description_filiale = rs.getString("description_filiale");
+				String description_filiale = rs.getString("description");
 				bank = new BankEntity(name, description_filiale);
 				bank.setId(id);
 			}
@@ -75,8 +75,8 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				String filiale_description = rs.getString("description_filiale");
-				E bank = (E) new BankEntity(name, filiale_description); // problem is in constructor(Will be resolved)
+				String description = rs.getString("description");
+				E bank = (E) new BankEntity(name, description); // problem is in constructor(Will be resolved)
 				banks.add(bank);
 			}
 		} catch (Exception e) {
@@ -116,10 +116,10 @@ public class BankDao<E, K> { // implements Dao<E , K >{
 		try {
 			// in order to fetch list of users and filiali the should a foreign key in user
 			// and filiale table to bank table
-			String query = "INSERT * INTO bank (name, description_filiale) VALUES(?,?)"; // Will be modified
+			String query = "INSERT INTO bank (name, description) VALUES(?,?)"; // Will be modified
 			stmt = con.prepareStatement(query);
 			stmt.setString(1, bank.getName());
-			stmt.setString(2, bank.getFiliale_description());
+			stmt.setString(2, bank.getDescription());
 			boolean added = stmt.execute();
 			if (added) {
 				System.out.println("The bank successfully added to database.");

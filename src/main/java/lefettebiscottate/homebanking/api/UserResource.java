@@ -76,10 +76,11 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(UserEntity u) {
-		if(userService.insert(u))
-			return Response.ok(u.toJson()).build();
-		else
-			return Response.status(Response.Status.CONFLICT).entity("Utente giï¿½ presente nel DB").build();
+		return Response.ok(userService.insert(u)).build();
+//		if(userService.insert(u))
+//			return Response.ok(u.toJson()).build();
+//		else
+//			return Response.status(Response.Status.CONFLICT).build(); //.entity("Utente già presente nel DB")
 	}
 	
 	

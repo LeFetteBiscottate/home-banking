@@ -13,14 +13,14 @@ public class BankEntity {
 
 	private int id;
 	private String name;
-	private String filiale_description;
+	private String description;
 
 	public BankEntity() {
 	}
 
-	public BankEntity(String name, String filiale_description) {
+	public BankEntity(String name, String description) {
 		this.name = name;
-		this.filiale_description = filiale_description;
+		this.description = description;
 	}
 	
 	
@@ -63,7 +63,7 @@ public class BankEntity {
 
 	@Override
 	public String toString() {
-		String stringa = "Banca:\n" + this.name+"\n"+this.filiale_description;
+		String stringa = "Banca:\n" + this.name+"\n"+this.description;
 		return stringa;
 	}
 
@@ -83,12 +83,12 @@ public class BankEntity {
 		this.name = name;
 	}
 
-	public String getFiliale_description() {
-		return filiale_description;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setFiliale_description(String filiale_description) {
-		this.filiale_description = filiale_description;
+	public void setDescription(String filiale_description) {
+		this.description = filiale_description;
 	}
 	
 	
