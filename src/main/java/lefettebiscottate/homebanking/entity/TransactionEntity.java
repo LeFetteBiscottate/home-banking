@@ -8,6 +8,12 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyVisibilityStrategy;
 
+
+/**
+ * 
+ * @author Khalili, Camusi, Mancin
+ *
+ */
 public class TransactionEntity {
 	
 	private int id;
@@ -33,6 +39,10 @@ public class TransactionEntity {
 	}
 	
 	
+	/**
+	 * 
+	 * @return oggetto TransactionEntity in formato JSON
+	 */
 	public String toJson() {
 		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
 

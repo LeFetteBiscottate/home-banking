@@ -7,6 +7,12 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyVisibilityStrategy;
 
+
+/**
+ * 
+ * @author Khalili, Camusi, Mancin
+ *
+ */
 public class CurrentAccountEntity {
 
 	private int id;
@@ -23,6 +29,10 @@ public class CurrentAccountEntity {
 	}
 	
 	
+	/**
+	 * 
+	 * @return oggetto CurrentAccountEntity in formato JSON
+	 */
 	public String toJson() {
 		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
 
@@ -41,6 +51,11 @@ public class CurrentAccountEntity {
 	}
 	
 	
+	/**
+	 * 
+	 * @param importo
+	 * @return balance aggiornato
+	 */
 	public double withdraw(double importo) {
 		if(this.balance >= importo)
 			this.balance -= importo;
@@ -48,6 +63,11 @@ public class CurrentAccountEntity {
 	}
 	
 	
+	/**
+	 * 
+	 * @param importo
+	 * @return balance aggiornato
+	 */
 	public double deposit(double importo) {
 		return this.balance += importo;
 	}

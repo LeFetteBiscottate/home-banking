@@ -9,6 +9,11 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyVisibilityStrategy;
 
+/**
+ * 
+ * @author Khalili, Camusi, Mancin
+ *
+ */
 public class AccountEntity {
 
 	private int id;
@@ -19,7 +24,10 @@ public class AccountEntity {
 
 	}
 	
-	
+	/**
+	 * 
+	 * @return oggetto AccountEntity in formato JSON
+	 */
 	public String toJson() {
 		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
 
@@ -38,7 +46,7 @@ public class AccountEntity {
 	}
 	
 	
-
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o == null)

@@ -7,6 +7,13 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyVisibilityStrategy;
 
+
+
+/**
+ * 
+ * @author Khalili, Camusi, Mancin
+ *
+ */
 public class PrestitoEntity {
 
 	private int id;
@@ -18,7 +25,6 @@ public class PrestitoEntity {
 	private String durata;
 	private int numero_rata_mancanti;
 	private TipoPrestito type;
-	//Abbiamo assunto a priori di avere delle rate mensili????
 	
 	
 	public PrestitoEntity() {}
@@ -36,6 +42,10 @@ public class PrestitoEntity {
 	}
 	
 	
+	/**
+	 * 
+	 * @return oggetto PrestitoEntity in formato JSON
+	 */
 	public String toJson() {
 		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
 

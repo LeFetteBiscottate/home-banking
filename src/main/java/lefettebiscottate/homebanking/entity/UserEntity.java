@@ -9,7 +9,11 @@ import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyVisibilityStrategy;
 
 
-
+/**
+ * 
+ * @author Khalili, Camusi, Mancin
+ *
+ */
 public class UserEntity {
 
 	private int id;
@@ -61,7 +65,13 @@ public class UserEntity {
 		this.isRegistrato = isRegistrato;
 		this.bank = bank;
 	}
-
+	
+	
+	
+	/**
+	 * 
+	 * @return oggetto UserEntity in formato JSON
+	 */
 	public String toJson() {
 		JsonbConfig config = new JsonbConfig().withPropertyVisibilityStrategy(new PropertyVisibilityStrategy() {
 
