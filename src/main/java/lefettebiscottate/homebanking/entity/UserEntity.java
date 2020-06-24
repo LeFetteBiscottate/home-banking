@@ -24,7 +24,7 @@ public class UserEntity {
 	private AccountType account_type;
 	private String partita_IVA;
 	private boolean isRegistrato;
-	private BankEntity bank;
+	private int bank;
 
 	// Costruttori
 	public UserEntity() {
@@ -47,7 +47,7 @@ public class UserEntity {
 	 */
 	public UserEntity(String name, String surname, String email, LocalDate birthdate, String password,
 			String phonenumber, String fiscal_code, Gender gender, AccountType account_type, String partita_IVA,
-			boolean isRegistrato, BankEntity bank) {
+			boolean isRegistrato, int bank) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -225,11 +225,11 @@ public class UserEntity {
 		this.id = id;
 	}
 
-	public BankEntity getBank() {
+	public int getBank() {
 		return bank;
 	}
 
-	public void setBank(BankEntity bank) {
+	public void setBank(int bank) {
 		this.bank = bank;
 	}
 

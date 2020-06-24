@@ -10,10 +10,9 @@ import lefettebiscottate.homebanking.utils.AddressValidation;
 public class AddressService {
 	private AddressValidation av = new AddressValidation();
 
-	private AddressDao<AddressEntity, Integer> addressDao;
+	private AddressDao addressDao = new AddressDao();;
 
 	public AddressService() {
-		addressDao = new AddressDao<AddressEntity, Integer>();
 	}
 
 	public List<AddressEntity> getAll() {
@@ -25,11 +24,12 @@ public class AddressService {
 	}
 
 	public AddressEntity insert(AddressEntity a) {
-		if (av.validateFullAddress(a)) {
-			return addressDao.insert(a);
-		}
+		//if (av.validateFullAddress(a)) {
+			addressDao.insert(a);
+			return a;
+		//}
 		// return addressDao.insert(a);
-		return null;
+		//return null;
 	}
 
 	public int delete(int id) {

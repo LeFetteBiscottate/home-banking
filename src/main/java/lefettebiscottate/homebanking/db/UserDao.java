@@ -42,7 +42,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 				u.setRegistrato(rs.getBoolean("registrato"));
 				u.setPartita_IVA(rs.getString("partitaIVA"));
 				u.setId(rs.getInt("id"));
-				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+				u.setBank(rs.getInt("bank_id"));
 			}
 
 			rs.close();
@@ -77,7 +77,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 				u.setRegistrato(rs.getBoolean("registrato"));
 				u.setPartita_IVA(rs.getString("partitaIVA"));
 				u.setId(rs.getInt("id"));
-				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+				u.setBank(rs.getInt("bank_id"));
 			}
 
 			rs.close();
@@ -113,7 +113,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 				u.setRegistrato(rs.getBoolean("registrato"));
 				u.setPartita_IVA(rs.getString("partitaIVA"));
 				u.setId(rs.getInt("id"));
-				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+				u.setBank(rs.getInt("bank_id"));
 			}
 
 			rs.close();
@@ -129,11 +129,12 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 	public List<UserEntity> getAll() {
 
 		List<UserEntity> utenti = new ArrayList<UserEntity>();
-
+		Statement stmt = null;
+		ResultSet rs = null;
 		try {
 			String query = "SELECT * FROM user";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
 
 			while (rs.next()) {
 				UserEntity u = new UserEntity();
@@ -150,8 +151,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 				u.setRegistrato(rs.getBoolean("registrato"));
 				u.setPartita_IVA(rs.getString("partitaIVA"));
 				u.setId(rs.getInt("id"));
-				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
-
+				u.setBank(rs.getInt("bank_id"));
 				utenti.add(u);
 			}
 
@@ -188,7 +188,7 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 				u.setRegistrato(rs.getBoolean("registrato"));
 				u.setPartita_IVA(rs.getString("partitaIVA"));
 				u.setId(rs.getInt("id"));
-				u.setBank(new BankDao<BankEntity, Integer>().getOne(rs.getInt("bank_id")));
+				u.setBank(rs.getInt("bank_id"));
 
 				utenti.add(u);
 			}
@@ -203,15 +203,15 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 	}
 	
 
-	public boolean insert(UserEntity u) {
-		boolean result = false;
-
+	public int insert(UserEntity u) {
+		//boolean result = false;
+		PreparedStatement pstmt= null;
 		try {
 
 			String sql = "INSERT INTO user (name, surname, birthdate, email, password, phone, codicefiscale, gender,"
-					+ " account_type, registrato, partitaIVA, bank_id)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ " account_type, registrato, partitaIVA, bank_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, u.getName());
 			pstmt.setString(2, u.getSurname());
@@ -224,15 +224,17 @@ public class UserDao {// implements Dao<UserEntity, Integer> {
 			pstmt.setString(9, u.getAccount_type().toString());
 			pstmt.setBoolean(10, false);
 			pstmt.setString(11, u.getPartita_IVA());
-			pstmt.setInt(12, u.getBank().getId());
-
-			result = pstmt.execute();
+			pstmt.setInt(12, u.getBank());
+			int rows = pstmt.executeUpdate();
 			pstmt.close();
+			if(rows > 0) {
+				return rows;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			result = false;
+			//result = false;
 		}
-		return result;
+		return 0;
 	}
 	
 	

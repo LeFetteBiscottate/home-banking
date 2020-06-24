@@ -50,12 +50,12 @@ public class UserService {
 		return userDao.delete(id);
 	}
 	
-	public boolean insert(UserEntity u) {
+	public UserEntity insert(UserEntity u) {
 		if(v.validateUser(u)) {
-			return userDao.insert(u);
+			userDao.insert(u);
+			return u;
 		}
-		//return userDao.insert(u);
-		return false;
+		return null;
 	}
 	
 	
