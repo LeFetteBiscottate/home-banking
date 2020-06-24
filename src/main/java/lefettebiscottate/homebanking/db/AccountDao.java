@@ -9,12 +9,22 @@ import java.util.List;
 
 import lefettebiscottate.homebanking.entity.AccountEntity;
 
-//import lefettebiscottate.homebanking.entity.AccountEntity;
-
-public class AccountDao<E, K> {// implements Dao<E,K> {
+/**
+ * 
+ * @author Khalili, Camusi, Mancin
+ *
+ * @param <E>
+ * @param <K>
+ */
+public class AccountDao<E, K> {
 	private static Connection con = DBConnection.getConnection();
 
 	// @Override
+	/**
+	 * 
+	 * @param primaryKey
+	 * @return AccountEntity avente PrimaryKey uguale al parametro passato
+	 */
 	public E getOne(K primaryKey) {
 		AccountEntity account = null;
 		Statement stmt = null;
@@ -59,6 +69,10 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 	}
 
 	// @Override
+	/**
+	 * 
+	 * @return Lista di tutti gli AccountEntity
+	 */
 	public List<E> getAll() {
 		List<E> accounts = null;
 		Statement stmt = null;
@@ -105,6 +119,11 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 	}
 
 	// @Override
+	/**
+	 * 
+	 * @param element
+	 * @return nuovo AccountEntity inserito
+	 */
 	public E insert(E element) {
 		AccountEntity acc = (AccountEntity) element;
 		PreparedStatement stmt = null;
@@ -145,6 +164,11 @@ public class AccountDao<E, K> {// implements Dao<E,K> {
 	}
 
 	// @Override
+	/**
+	 * 
+	 * @param primaryKey
+	 * @return Integer
+	 */
 	public Integer delete(K primaryKey) {
 		Statement stmt = null;
 		try {
